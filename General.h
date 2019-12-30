@@ -62,9 +62,7 @@ class defineVarCommand : public Command {
   unordered_map<string, Variable> varSim;
   unordered_map<string, Variable> varProgram;
  public:
-  defineVarCommand(unordered_map<string, Variable> varSim,
-                   unordered_map<string, Variable> varProgram
-                   );
+  defineVarCommand(unordered_map<string, Variable> varSim, unordered_map<string, Variable> varProgram);
   int execute(vector<string> &arguments);
 };
 
@@ -145,19 +143,19 @@ public:
 };
 
 class OpenServer: public Command{
-
 protected:
+    unordered_map<string,Variable> pathMap;
     string ip = "";
     int port;
     int socke;
-    map<string, node*> table;
+    string table[36];
+public:
+    OpenServer(unordered_map<string,Variable> &varProgram);
 
 public:
     int execute(vector<string> &v) override;
     void Server();
     void tableUpdate();
-
-
 };
 
 class Print: public Command {
@@ -176,10 +174,10 @@ public:
 
 class Parser {
 private:
-    map<string, Command*> myMap;
+    unordered_map<string, Command*> commandMap;
     vector<string> v;
 public:
-    Parser(map<string, Command*> map, vector<string> &vec);
+    Parser(unordered_map<string, Command *> &map, vector<string> &vec);
     void parsing();
     vector<string> cut(int m);
 };

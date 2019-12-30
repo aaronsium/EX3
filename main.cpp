@@ -17,12 +17,12 @@ int main() {
 
 
 
-//  ConnectCommand connect;
-  vector<string> v2;
-  v2.push_back("connectControlClient");
-  v2.push_back("127.0.0.1");
-  v2.push_back("5402");
-//  connect.execute(v2);
+////  ConnectCommand connect;
+//  vector<string> v2;
+//  v2.push_back("connectControlClient");
+//  v2.push_back("127.0.0.1");
+//  v2.push_back("5402");
+////  connect.execute(v2);
 
 
 

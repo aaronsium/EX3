@@ -1,6 +1,4 @@
-//
-// Created by aharon on 26/12/2019.
-//
+
 
 #include "General.h"
 

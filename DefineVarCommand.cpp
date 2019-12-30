@@ -5,7 +5,7 @@
 #include "General.h"
 
 defineVarCommand::defineVarCommand(unordered_map<string, Variable> varSim,
-                                   unordered_map<string, Variable> varProgram,
+                                   unordered_map<string, Variable> varProgram
                                    ) {
   this->varSim = varSim;
   this->varProgram = varProgram;

@@ -16,10 +16,14 @@
 #include <fstream>
 #include <algorithm>
 #include <cstring>
+#include <Command.h>
+
 using namespace std;
 using namespace std::literals::chrono_literals;
-class Command {
-  virtual int execute(vector<string> &arguments) = 0;
+
+struct node {
+    float value;
+    string sim;
 };
 
 class Lexer {
@@ -132,4 +136,50 @@ class Interpreter {
   bool unaryCheck(string opr, string last,int roundNumber );
   virtual ~Interpreter();
 
+};
+
+class ifCommand: public ConditionParser {
+public:
+    int execute(vector<string> &v) override;
+    vector<string> cut(vector<string> &v, int m);
+};
+
+class OpenServer: public Command{
+
+protected:
+    string ip = "";
+    int port;
+    int socke;
+    map<string, node*> table;
+
+public:
+    int execute(vector<string> &v) override;
+    void Server();
+    void tableUpdate();
+
+
+};
+
+class Print: public Command {
+private:
+    map<string, node*> commandMap;
+public:
+    int execute(vector<string> &v) override;
+
+};
+
+class Sleep: public Command{
+public:
+    int execute(vector<string> &v) override;
+    void sleep(int milli);
+};
+
+class Parser {
+private:
+    map<string, Command*> myMap;
+    vector<string> v;
+public:
+    Parser(map<string, Command*> map, vector<string> &vec);
+    void parsing();
+    vector<string> cut(int m);
 };

@@ -47,12 +47,13 @@ void OpenServer:: Server(){
 
     char* buffer;
     while (read(client_socket, buffer, 1024)){
-        int i = 0;
+        for(int i = 0; i < 36 ; i++){
         string delimiter = ",";
         string token = string(buffer).substr(0, string(buffer).find(delimiter));
         buffer += delimiter.length();
 
         pathMap[table[i]].SetValue(strtof((string(buffer)).c_str(),0));
+        }
     }
 
     close(client_socket);

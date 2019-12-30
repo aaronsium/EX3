@@ -5,8 +5,7 @@
 #include "General.h"
 
 defineVarCommand::defineVarCommand(unordered_map<string, Variable> varSim,
-                                   unordered_map<string, Variable> varProgram,
-                                   ) {
+                                   unordered_map<string, Variable> varProgram) {
   this->varSim = varSim;
   this->varProgram = varProgram;
 
@@ -25,4 +24,5 @@ int defineVarCommand::execute(vector<string> &arguments) {
   }
 
   varProgram[arguments[0]] = var1;
+  varSim[varProgram[arguments[0]].GetSim()] = var1;
 }

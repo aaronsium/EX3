@@ -10,6 +10,9 @@ void Parser:: parsing(){
     Command* c = NULL;
     //activate all commands in the lexer
     while(i < v.size()){
+        while(v[i] == "}"){
+            i++;
+        }
         c = myMap[v[i]];
         if(c != NULL){
             vector<string> vec = cut(i);

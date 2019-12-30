@@ -145,12 +145,14 @@ public:
 };
 
 class OpenServer: public Command{
-
+private:
+    unordered_map<string,Variable> pathMap;
 protected:
+    OpenServer(unordered_map<string,Variable> &varProgram);
     string ip = "";
     int port;
     int socke;
-    map<string, node*> table;
+    string table[36];
 
 public:
     int execute(vector<string> &v) override;

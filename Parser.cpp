@@ -1,8 +1,8 @@
 #include "General.h"
 
-Parser:: Parser(map<string, Command*> map, vector<string> &vec){
-    this->myMap = map;
-    this->v = vec;
+Parser:: Parser(unordered_map<string, Command *> &map, vector<string> &vec){
+    this -> commandMap = map;
+    this -> v = vec;
 }
 
 void Parser:: parsing(){
@@ -10,10 +10,8 @@ void Parser:: parsing(){
     Command* c = NULL;
     //activate all commands in the lexer
     while(i < v.size()){
-        while(v[i] == "}"){
-            i++;
-        }
-        c = myMap[v[i]];
+        while(v[i] == "}"){}
+        c = commandMap[v[i]];
         if(c != NULL){
             vector<string> vec = cut(i);
             i += c->execute(vec);

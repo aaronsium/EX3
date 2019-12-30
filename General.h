@@ -59,7 +59,7 @@ class defineVarCommand : public Command {
   unordered_map<string, Variable> varProgram;
  public:
   defineVarCommand(unordered_map<string, Variable> varSim,
-                   unordered_map<string, Variable> varProgram,
+                   unordered_map<string, Variable> varProgram
                    );
   int execute(vector<string> &arguments);
 };

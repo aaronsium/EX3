@@ -17,7 +17,6 @@ int OpenServer:: execute(vector<string> &v){
 }
 
 void OpenServer:: Server(){
-
     socke = socket(AF_INET, SOCK_STREAM, 0);
     if(socke == -1){
         cerr << "Could not create a socket" << endl;

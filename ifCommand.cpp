@@ -18,5 +18,6 @@ vector<string> ifCommand:: cut(vector<string> &v, int m){
     auto last = v.cbegin() + m;
 
     vector<string> vec(first, last);
+
     return vec;
 }

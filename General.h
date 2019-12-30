@@ -145,9 +145,8 @@ public:
 };
 
 class OpenServer: public Command{
-private:
-    unordered_map<string,Variable> pathMap;
 protected:
+    unordered_map<string,Variable> pathMap;
     OpenServer(unordered_map<string,Variable> &varProgram);
     string ip = "";
     int port;
@@ -158,8 +157,6 @@ public:
     int execute(vector<string> &v) override;
     void Server();
     void tableUpdate();
-
-
 };
 
 class Print: public Command {

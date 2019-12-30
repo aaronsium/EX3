@@ -22,7 +22,6 @@ int defineVarCommand::execute(vector<string> &arguments) {
   else {
     var1.SetSim(arguments[1]);
   }
-
   varProgram[arguments[0]] = var1;
   varSim[varProgram[arguments[0]].GetSim()] = var1;
 }

@@ -3,8 +3,8 @@ using namespace std;
 
 #define PORT 8081
 
-void resetCommandMap(unordered_map<string,Variable> &varSim,
-        unordered_map<string,Variable> &varProgram, unordered_map<string, Command*> &commandMap){
+void resetCommandMap(unordered_map<string,Var> &varSim,
+        unordered_map<string,Var> &varProgram, unordered_map<string, Command*> &commandMap){
     commandMap["openDataServer"] = new OpenServer(varProgram);
     commandMap["connectControlClient"] = new ConnectCommand;
     commandMap["var"] = new defineVarCommand(varSim, varProgram);
@@ -31,14 +31,14 @@ int main() {
   Lexer lex("fly.txt");
   lex.lexing();
   // creating maps of variables and defineVarCommand
-  unordered_map<string,Variable> varSim;
-  unordered_map<string,Variable> varProgram;
+  unordered_map<string,Var> varSim;
+  unordered_map<string,Var> varProgram;
 //  defineVarCommand VarCommand (varSim, varProgram); --- defined in commandMap
 
   // remember to insert VarCommand which created above, to the parser --- what that means?‬
   unordered_map<string, Command*> commandMap;
   resetCommandMap(varSim, varProgram, commandMap);
-  Parser par(commandMap, lex.GetV1()); // --- something wrong with the receiving of lex.GetV1()
+  Parser par(commandMap, lex.GetV1()); // --- something wrong with the receiving of lex.GetV1() ---- אהרון : הגטר שלי מחזיר קונסט - הוספתי לך לקונסטרטור של הפארסר קונסט פשוט לפני הארגומנט של הוקטור
   par.parsing();
 
 

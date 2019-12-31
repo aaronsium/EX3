@@ -1,6 +1,6 @@
 #include "General.h"
 
-Parser:: Parser(unordered_map<string, Command *> &map, vector<string> &vec){
+Parser:: Parser(unordered_map<string, Command *> &map, const vector<string> &vec){
     this -> commandMap = map;
     this -> v = vec;
 }

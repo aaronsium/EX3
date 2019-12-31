@@ -1,6 +1,7 @@
 //
 // Created by aharon on 22/12/2019.
 //
+
 #include "General.h"
 ConnectCommand::ConnectCommand() {
 }
@@ -23,14 +24,16 @@ int ConnectCommand::clientConnect(int PORT, const char *hostAddress) {
   } else {
     cout << "Client is now connected to server" << endl;
   }
-  char hello[] = "hiiiiiiiii";
-  int is_sent = send(client_socket, hello, strlen(hello), 0);
-  if (is_sent==-1) {
-    cout << "Error sending message" << endl;
-    return -2;
-  } else {
-    cout << "hello message sent to server" << endl;
-  }
+
+
+//  char hello[] = "hiiiiiiiii";
+//  int is_sent = send(client_socket, hello, strlen(hello), 0);
+//  if (is_sent==-1) {
+//    cout << "Error sending message" << endl;
+//    return -2;
+//  } else {
+//    cout << "hello message sent to server" << endl;
+//  }
 
 
 
@@ -45,7 +48,9 @@ int ConnectCommand::execute(vector<string> &arguments) {
   // converting the address(string) to const char*
   const char *address = arguments[1].c_str();
   // opening a thread by
-  thread threadClient(&ConnectCommand::clientConnect, this, port);
+  thread threadClient(&ConnectCommand::clientConnect, this, port,address);
+
+
 
   threadClient.join();
 

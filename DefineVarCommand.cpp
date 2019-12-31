@@ -4,15 +4,15 @@
 
 #include "General.h"
 
-defineVarCommand::defineVarCommand(unordered_map<string, Variable> varSim,
-                                   unordered_map<string, Variable> varProgram
+defineVarCommand::defineVarCommand(unordered_map<string, Var> varSim,
+                                   unordered_map<string, Var> varProgram
                                    ) {
   this->varSim = varSim;
   this->varProgram = varProgram;
 
 }
 int defineVarCommand::execute(vector<string> &arguments) {
-  Variable var1;
+  Var var1;
   //definition
   //there is binding
   if (arguments[1]=="->" || arguments[1]=="<-") {

@@ -1,8 +1,7 @@
 //
 // Created by aharon on 18/12/2019.
 //
-#include <chrono>
-#include <thread>
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -17,6 +16,8 @@
 #include <algorithm>
 #include <cstring>
 #include <Command.h>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 using namespace std::literals::chrono_literals;
@@ -40,7 +41,7 @@ class Lexer {
 
 };
 
-class Variable {
+class Var {
  private:
   double value;
   string BoundWay = "-1";
@@ -53,31 +54,31 @@ class Variable {
   const string &GetBoundWay() const;
   const string &GetSim() const;
  public:
-  Variable();
+  Var();
 
 };
 
 class defineVarCommand : public Command {
  private:
-  unordered_map<string, Variable> varSim;
-  unordered_map<string, Variable> varProgram;
+  unordered_map<string, Var> varSim;
+  unordered_map<string, Var> varProgram;
  public:
-  defineVarCommand(unordered_map<string, Variable> varSim, unordered_map<string, Variable> varProgram);
+  defineVarCommand(unordered_map<string, Var> varSim, unordered_map<string, Var> varProgram);
   int execute(vector<string> &arguments);
 };
 
 class SetVarCommand : public Command {
  private:
   int sockfd;
-  unordered_map<string, Variable> varSim;
-  unordered_map<string, Variable> varProgram;
+  unordered_map<string, Var> varSim;
+  unordered_map<string, Var> varProgram;
   string name;
   double value;
  public:
   SetVarCommand(string name,
                 double value,
-                unordered_map<string, Variable> varSim,
-                unordered_map<string, Variable> varProgram, int sockfd);
+                unordered_map<string, Var> varSim,
+                unordered_map<string, Var> varProgram, int sockfd);
   int execute(vector<string> &arguments);
   ssize_t sendMessage(string path);
 };
@@ -114,27 +115,6 @@ class Expression {
   virtual ~Expression() {}
 };
 
-class Interpreter {
- private:
-  string inPutString;
-  map<string,string > variablesMap;
-  map<string,int> precedence;
-  stack<string>operatorStack;
-  stack<Expression*>finalExp;
-  queue<string>numQueue;
-  string postFixExp;
-  vector< string> realNumbers;
-
- public:
-  Interpreter ();
-  Expression* evaluate ();
-  Expression* interpret(string str);
-  void setVariables(string exp);
-  void splitInput(string str);
-  bool unaryCheck(string opr, string last,int roundNumber );
-  virtual ~Interpreter();
-
-};
 
 class ifCommand: public ConditionParser {
 public:
@@ -144,13 +124,13 @@ public:
 
 class OpenServer: public Command{
 protected:
-    unordered_map<string,Variable> pathMap;
+    unordered_map<string,Var> pathMap;
     string ip = "";
     int port;
     int socke;
     string table[36];
 public:
-    OpenServer(unordered_map<string,Variable> &varProgram);
+    OpenServer(unordered_map<string,Var> &varProgram);
 
 public:
     int execute(vector<string> &v) override;
@@ -177,7 +157,144 @@ private:
     unordered_map<string, Command*> commandMap;
     vector<string> v;
 public:
-    Parser(unordered_map<string, Command *> &map, vector<string> &vec);
+    Parser(unordered_map<string, Command *> &map, const vector<string> &vec);
     void parsing();
     vector<string> cut(int m);
+};
+
+
+
+/////////////////// ex1 files
+
+// UNARY
+class UnaryOperator : public Expression {
+ public:
+  double calculate()override;
+  UnaryOperator(Expression *exp);
+  virtual ~UnaryOperator();
+ protected:
+  Expression *exp = nullptr;
+};
+
+//Variable
+class Variable : public Expression {
+ private:
+  string name;
+  double value;
+ public:
+  void setName(const string &name);
+  void setValue(double value);
+  virtual ~Variable();
+  Variable(string name, double value);
+  double calculate()override ;
+  Variable &operator++();
+  Variable &operator--();
+  Variable &operator++(int);
+  Variable &operator--(int);
+  Variable &operator+=(double v1);
+  Variable &operator-=(double v1);
+
+  const string &getName() const;
+
+  double getValue() const;
+
+};
+
+//binary
+
+class BinaryOperator : public Expression {
+ public:
+  double calculate()override ;
+  BinaryOperator(Expression *right1, Expression *left1);
+  virtual ~BinaryOperator();
+ protected:
+  Expression *right = nullptr;
+  Expression *left = nullptr;
+};
+
+// plus
+
+class Plus : public BinaryOperator {
+ public:
+  double calculate();
+  Plus(Expression *right1, Expression *left1);
+  virtual ~Plus();
+};
+//
+// Minus
+
+class Minus : public BinaryOperator {
+ public:
+  Minus(Expression *right, Expression *left);
+  double calculate();
+  virtual ~Minus();
+};
+
+// Div
+
+class Div : public BinaryOperator {
+ public:
+  double calculate() ;
+  Div(Expression *right_1, Expression *left_1);
+  virtual ~Div();
+};
+
+//Mult
+
+class Mul : public BinaryOperator {
+ public:
+  double calculate();
+  Mul(Expression *right_1, Expression *left_1);
+  virtual ~Mul();
+};
+
+//Value
+
+class Value : public Expression {
+ private:
+  double value;
+ public:
+  double calculate() ;
+  Value(double value);
+  virtual ~Value();
+};
+
+//Uplus
+
+class UPlus : public UnaryOperator {
+ public:
+  double calculate();
+  UPlus(Expression *exp);
+  virtual ~UPlus();
+};
+
+//UMinus
+
+class UMinus : public UnaryOperator {
+ public:
+  UMinus(Expression *exp);
+  double calculate();
+  virtual ~UMinus();
+};
+// interpreter
+class Interpreter {
+ private:
+  string inPutString;
+  map<string,string > variablesMap;
+  map<string,int> precedence;
+  stack<string>operatorStack;
+  stack<Expression*>finalExp;
+  queue<string>numQueue;
+  string postFixExp;
+  vector< string> realNumbers;
+
+ public:
+  Interpreter ();
+  Expression* evaluate ();
+  Expression* interpret(string str);
+  void setVariables(string exp);
+  void splitInput(string str);
+  bool unaryCheck(string opr, string last,int roundNumber );
+  virtual ~Interpreter();
+
 };

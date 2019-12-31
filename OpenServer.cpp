@@ -4,7 +4,7 @@
 
 #include "General.h"
 
-OpenServer::OpenServer(unordered_map<string,Variable> &varProgram){
+OpenServer::OpenServer(unordered_map<string,Var> &varProgram){
     this -> pathMap = varProgram;
 }
 

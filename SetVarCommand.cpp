@@ -5,8 +5,8 @@
 #include "General.h"
 SetVarCommand::SetVarCommand(string name,
                              double value,
-                             unordered_map<string, Variable> varSim,
-                             unordered_map<string, Variable> varProgram,
+                             unordered_map<string, Var> varSim,
+                             unordered_map<string, Var> varProgram,
                              int sockfd) {
   this->sockfd = sockfd;
   this->name = name;
@@ -16,7 +16,7 @@ SetVarCommand::SetVarCommand(string name,
 }
 
 int SetVarCommand::execute(vector<string> &arguments) {
-  Variable *var1 = &(this->varProgram[arguments[0]]);
+  Var *var1 = &(this->varProgram[arguments[0]]);
   var1->SetValue(this->value);
   //if var 1 is bound to varSim -> update the sim variable by sending a message
   if (var1->GetBoundWay()=="->") {

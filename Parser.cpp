@@ -6,6 +6,7 @@ Parser:: Parser(unordered_map<string, Command *> &map, const vector<string> &vec
 }
 
 void Parser:: parsing(){
+   isParsing = true;
     int i = 0;
     Command* c = NULL;
     //activate all commands in the lexer

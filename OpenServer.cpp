@@ -48,7 +48,7 @@ void OpenServer:: Server(){
   cout<<"waiting"<<endl;
 
     char buffer[1024] = {0};
-    while (true){
+    while (isParsing){
       read(client_socket, buffer, 1024);;
 //      string buf(buffer);
       char delimiter = ',';
@@ -72,6 +72,7 @@ void OpenServer:: Server(){
         j++;
         }
     }
+    this_thread::sleep_for(chrono::seconds(4));
   cout<<"waiting2"<<endl;
 
     close(client_socket);

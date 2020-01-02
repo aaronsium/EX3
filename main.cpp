@@ -1,8 +1,9 @@
 #include "General.h"
 using namespace std;
 
-#define PORT 8081
 
+#define PORT 8081
+bool isParsing = true;
 void resetCommandMap(unordered_map<string,Var> &varSim,
         unordered_map<string,Var> &varProgram, unordered_map<string, Command*> &commandMap){
     commandMap["openDataServer"] = new OpenServer(varProgram);
@@ -40,6 +41,8 @@ int main() {
   resetCommandMap(varSim, varProgram, commandMap);
   Parser par(commandMap, lex.GetV1()); // --- something wrong with the receiving of lex.GetV1() ---- אהרון : הגטר שלי מחזיר קונסט - הוספתי לך לקונסטרטור של הפארסר קונסט פשוט לפני הארגומנט של הוקטור
   par.parsing();
+  isParsing = false;
+
 
 
 ////  ConnectCommand connect;

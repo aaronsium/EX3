@@ -22,6 +22,9 @@
 using namespace std;
 using namespace std::literals::chrono_literals;
 
+
+extern bool isParsing;
+
 struct node {
     float value;
     string sim;

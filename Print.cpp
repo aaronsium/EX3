@@ -5,8 +5,6 @@
 #include "General.h"
 
 int Print:: execute(vector<string> &v){
-    cout  << v[1] <<endl;
-
     string s = v[1];
     if(s[0] == '"'){
         cout  << v[1] <<endl;

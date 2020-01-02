@@ -1,7 +1,6 @@
 #include "General.h"
 using namespace std;
 
-
 #define PORT 8081
 bool isParsing = false;
 bool isServerOpen= false;
@@ -17,7 +16,16 @@ void resetCommandMap(unordered_map<string,Var> &varSim,
     commandMap["if"] = new ifCommand;
     commandMap["while"] = new loopCommands;
 
-    // --- change zeros to the right value!
+    commandMap["warp"] = new SetVarCommand(varSim, varProgram);
+    commandMap["magnetos"] = new SetVarCommand(varSim, varProgram);
+    commandMap["masterbat"] = new SetVarCommand(varSim, varProgram);
+    commandMap["masterlat"] = new SetVarCommand(varSim, varProgram);
+    commandMap["masterbat"] = new SetVarCommand(varSim, varProgram);
+    commandMap["masteravionics"] = new SetVarCommand(varSim, varProgram);
+    commandMap["brakeparking"] = new SetVarCommand(varSim, varProgram);
+    commandMap["primer"] = new SetVarCommand(varSim, varProgram);
+    commandMap["starter"] = new SetVarCommand(varSim, varProgram);
+    commandMap["autostart"] = new SetVarCommand(varSim, varProgram);
     commandMap["breaks"] = new SetVarCommand(varSim, varProgram);
     commandMap["throttle"] = new SetVarCommand(varSim, varProgram);
     commandMap["heading"] = new SetVarCommand(varSim, varProgram);
@@ -28,6 +36,7 @@ void resetCommandMap(unordered_map<string,Var> &varSim,
     commandMap["aileron"] = new SetVarCommand(varSim, varProgram);
     commandMap["elevator"] = new SetVarCommand(varSim, varProgram);
     commandMap["alt"] = new SetVarCommand(varSim, varProgram);
+    commandMap["rpm"] = new SetVarCommand(varSim, varProgram);
 }
 
 int main() {

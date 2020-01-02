@@ -11,7 +11,13 @@ OpenServer::OpenServer(unordered_map<string,Var> &varProgram){
 int OpenServer:: execute(vector<string> &v){
     port = stoi(v[1]);
     tableUpdate();
+    thread serverThread(&OpenServer::Server, this, OpenServer:: newSocket());
+    serverThread.detach();
 
+    return 2;
+}
+
+int OpenServer:: newSocket(){
     int socke = socket(AF_INET, SOCK_STREAM, 0);
     if(socke == -1){
         cerr << "Could not create a socket" << endl;
@@ -40,40 +46,34 @@ int OpenServer:: execute(vector<string> &v){
         return -4;
     }
 
-
-    thread serverThread(&OpenServer::Server, this, client_socket);
-    serverThread.detach();
-
-    return 2;
+    return client_socket;
 }
 
 void OpenServer:: Server(int client_socket){
-  cout<<"waiting"<<endl;
-
+    cout << "Server is now listening" << endl;
     char buffer[1024] = {0};
     while (read(client_socket, buffer, 1024 ) && isParsing){
-      char delimiter = ',';
-      int m = 0;
-      int j = 0;
-      for(int i = 0; i < 36 ; i++){
-          while ((buffer[j] != delimiter) && (buffer[j] != '\0')){
-          j++;
-        }
-          string token = "";
-          while (m < j){
-            token += buffer[m];
+        serverReady = true;
+        char delimiter = ',';
+        int m = 0;
+        int j = 0;
+        for(int i = 0; i < 36 ; i++){
+            while ((buffer[j] != delimiter) && (buffer[j] != '\0')){
+                j++;
+            }
+            string token = "";
+            while (m < j){
+                token += buffer[m];
+                m++;
+            }
             m++;
-          }
-          m++;
           //ביטלתי את ההדפסות בשביל לבדוק הדפסות של הלקוח
 //        cout<<token<< " - ";
-        pathMap[table[i]].SetValue(strtof((string(token)).c_str(),0));
+         pathMap[table[i]].SetValue(strtof((string(token)).c_str(),0));
 //        cout<<table[i] << " + " <<pathMap[table[i]].GetValue()<<endl;
-        j++;
-      }
+         j++;
+        }
     }
-  cout<<"waiting2"<<endl;
-
     close(client_socket);
 }
 

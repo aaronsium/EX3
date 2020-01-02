@@ -24,13 +24,8 @@ using namespace std::literals::chrono_literals;
 
 extern bool isParsing;
 extern bool isServerOpen;
+extern bool serverReady;
 
-
-
-struct node {
-    float value;
-    string sim;
-};
 
 class Lexer {
  private:
@@ -93,8 +88,9 @@ class ConnectCommand : public Command {
 
  public:
   ConnectCommand();
-  int clientConnect(int PORT, string hostAdress);
+  int clientConnect(int client_socket);
   int execute(vector<string> &arguments);
+  int newSocket(string adress2, int port);
 };
 
 class ConditionParser : public Command {
@@ -140,11 +136,10 @@ public:
     int execute(vector<string> &v) override;
     void Server(int client_socket);
     void tableUpdate();
+    int newSocket();
 };
 
 class Print: public Command {
-private:
-    map<string, node*> commandMap;
 public:
     int execute(vector<string> &v) override;
 

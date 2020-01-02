@@ -17,7 +17,11 @@ int defineVarCommand::execute(vector<string> &arguments) {
 
   if (arguments[2]=="->" || arguments[2]=="<-") {
     var1.SetBoundWay(arguments[2]);
-    var1.SetSim(arguments[4]);
+    string sim = arguments[4];
+    sim.erase(std::remove(sim.begin(), sim.end(), '"'), sim.end());
+    string simFix ;
+    simFix = sim.substr(1);
+    var1.SetSim(simFix);
     cout << arguments[1]+" "+var1.GetBoundWay()+ " " + var1.GetSim() << endl;
 
   }
@@ -28,5 +32,8 @@ int defineVarCommand::execute(vector<string> &arguments) {
   }
 
   (*varProgram)[arguments[1]] = var1;
+  (*varSim)[(*varProgram)[arguments[1]].GetSim()] = var1;
+
+
   return 5;
 }

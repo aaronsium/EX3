@@ -17,6 +17,7 @@ void resetCommandMap(unordered_map<string,Var> &varSim,
     commandMap["if"] = new ifCommand;
     commandMap["while"] = new loopCommands;
 
+    commandMap["mixture"] = new SetVarCommand(varSim, varProgram);
     commandMap["warp"] = new SetVarCommand(varSim, varProgram);
     commandMap["magnetos"] = new SetVarCommand(varSim, varProgram);
     commandMap["masterbat"] = new SetVarCommand(varSim, varProgram);

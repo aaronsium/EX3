@@ -25,6 +25,8 @@ using namespace std::literals::chrono_literals;
 
 extern bool isParsing;
 
+
+
 struct node {
     float value;
     string sim;
@@ -126,19 +128,18 @@ public:
 };
 
 class OpenServer: public Command{
-protected:
-    unordered_map<string,Var> pathMap;
-    string ip = "";
-    int port;
-    int socke;
-    string table[36];
-public:
-    OpenServer(unordered_map<string,Var> &varProgram);
-
-public:
-    int execute(vector<string> &v) override;
-    void Server();
-    void tableUpdate();
+ protected:
+  unordered_map<string,Var> pathMap;
+  string ip = "";
+  int port;
+  int socke;
+  string table[36];
+ public:
+  OpenServer(unordered_map<string,Var> &varProgram);
+  int execute(vector<string> &v) override;
+  void Server(int client_socket);
+  void tableUpdate();
+  int newSocket();
 };
 
 class Print: public Command {

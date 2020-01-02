@@ -11,8 +11,42 @@ OpenServer::OpenServer(unordered_map<string,Var> &varProgram){
 int OpenServer:: execute(vector<string> &v){
     port = stoi(v[1]);
     tableUpdate();
+    thread serverThread(&OpenServer::Server, this, newSocket());
+    serverThread.join();
 
-    int socke = socket(AF_INET, SOCK_STREAM, 0);
+    return 2;
+}
+
+void OpenServer:: Server(int client_socket){
+  cout<<"waiting"<<endl;
+    char buffer[1024] = {0};
+    while (read(client_socket, buffer, 1024)){
+      char delimiter = ',';
+      int m = 0;
+      int j = 0;
+      for(int i = 0; i < 36 ; i++){
+          while ((buffer[j] != delimiter) && (buffer[j] != '\0')){
+          j++;
+        }
+          string token = "";
+          while (m < j){
+            token += buffer[m];
+            m++;
+          }
+          m++;
+        cout<<token<< " - ";
+        pathMap[table[i]].SetValue(strtof((string(token)).c_str(),0));
+        cout<<table[i] << " + " <<pathMap[table[i]].GetValue()<<endl;
+        j++;
+      }
+    }
+  cout<<"waiting2"<<endl;
+
+    close(client_socket);
+}
+
+int OpenServer:: newSocket() {
+    this-> socke = socket(AF_INET, SOCK_STREAM, 0);
     if(socke == -1){
         cerr << "Could not create a socket" << endl;
         return -1;
@@ -40,40 +74,7 @@ int OpenServer:: execute(vector<string> &v){
         return -4;
     }
 
-
-    thread serverThread(&OpenServer::Server, this, client_socket);
-    serverThread.join();
-
-    return 2;
-}
-
-void OpenServer:: Server(int client_socket){
-  cout<<"waiting"<<endl;
-
-    char buffer[1024] = {0};
-    while (read(client_socket, buffer, 1024)){
-      char delimiter = ',';
-      int m = 0;
-      int j = 0;
-      for(int i = 0; i < 36 ; i++){
-          while ((buffer[j] != delimiter) && (buffer[j] != '\0')){
-          j++;
-        }
-          string token = "";
-          while (m < j){
-            token += buffer[m];
-            m++;
-          }
-          m++;
-        cout<<token<< " - ";
-        pathMap[table[i]].SetValue(strtof((string(token)).c_str(),0));
-        cout<<table[i] << " + " <<pathMap[table[i]].GetValue()<<endl;
-        j++;
-      }
-    }
-  cout<<"waiting2"<<endl;
-
-    close(client_socket);
+    return client_socket;
 }
 
 

@@ -23,6 +23,9 @@ using namespace std;
 using namespace std::literals::chrono_literals;
 
 extern bool isParsing;
+extern bool isServerOpen;
+
+
 
 struct node {
     float value;
@@ -60,6 +63,10 @@ class Var {
 
 };
 
+//gloabl variable
+extern  queue<Var> setQueue ;
+//
+
 class defineVarCommand : public Command {
  private:
   unordered_map<string, Var> varSim;
@@ -77,10 +84,7 @@ class SetVarCommand : public Command {
   string name;
   double value;
  public:
-  SetVarCommand(string name,
-                double value,
-                unordered_map<string, Var> varSim,
-                unordered_map<string, Var> varProgram, int sockfd);
+  SetVarCommand(unordered_map<string, Var> varSim,unordered_map<string, Var> varProgram);
   int execute(vector<string> &arguments);
   ssize_t sendMessage(string path);
 };
@@ -89,7 +93,7 @@ class ConnectCommand : public Command {
 
  public:
   ConnectCommand();
-  int clientConnect(int PORT, const char *hostAdress);
+  int clientConnect(int PORT, string hostAdress);
   int execute(vector<string> &arguments);
 };
 

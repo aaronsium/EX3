@@ -65,9 +65,10 @@ void OpenServer:: Server(int client_socket){
             m++;
           }
           m++;
-        cout<<token<< " - ";
+          //ביטלתי את ההדפסות בשביל לבדוק הדפסות של הלקוח
+//        cout<<token<< " - ";
         pathMap[table[i]].SetValue(strtof((string(token)).c_str(),0));
-        cout<<table[i] << " + " <<pathMap[table[i]].GetValue()<<endl;
+//        cout<<table[i] << " + " <<pathMap[table[i]].GetValue()<<endl;
         j++;
       }
     }

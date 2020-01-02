@@ -3,26 +3,19 @@
 //
 
 #include "General.h"
-SetVarCommand::SetVarCommand(string name,
-                             double value,
-                             unordered_map<string, Var> varSim,
-                             unordered_map<string, Var> varProgram,
-                             int sockfd) {
-  this->sockfd = sockfd;
-  this->name = name;
-  this->value = value;
+SetVarCommand::SetVarCommand(unordered_map<string, Var> varSim,unordered_map<string, Var> varProgram){
   this->varProgram = varProgram;
   this->varSim = varSim;
 }
 
 int SetVarCommand::execute(vector<string> &arguments) {
+  Interpreter* i2 = new Interpreter();
   Var *var1 = &(this->varProgram[arguments[0]]);
-  var1->SetValue(this->value);
+  var1->SetValue(i2->interpret(arguments[2])->calculate());
   //if var 1 is bound to varSim -> update the sim variable by sending a message
   if (var1->GetBoundWay()=="->") {
-    return sendMessage(var1->GetSim());
+    setQueue.push(*var1);
   }
-
 }
 //
 ssize_t SetVarCommand::sendMessage(string path) {

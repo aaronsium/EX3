@@ -3,7 +3,10 @@ using namespace std;
 
 
 #define PORT 8081
-bool isParsing = true;
+bool isParsing = false;
+bool isServerOpen= false;
+queue<Var> setQueue ;
+
 void resetCommandMap(unordered_map<string,Var> &varSim,
         unordered_map<string,Var> &varProgram, unordered_map<string, Command*> &commandMap){
     commandMap["openDataServer"] = new OpenServer(varProgram);

@@ -12,12 +12,13 @@ int OpenServer:: execute(vector<string> &v){
     port = stoi(v[1]);
     tableUpdate();
     thread serverThread(&OpenServer::Server, this);
+    serverThread.detach();
 
     return 2;
 }
 
 void OpenServer:: Server(){
-    socke = socket(AF_INET, SOCK_STREAM, 0);
+    int socke = socket(AF_INET, SOCK_STREAM, 0);
     if(socke == -1){
         cerr << "Could not create a socket" << endl;
         return;
@@ -38,23 +39,40 @@ void OpenServer:: Server(){
         return;
     }
 
-    int client_socket = accept(socke, (struct sockaddr*) &address, (socklen_t*)&address);
-
+    cout<<"waiting"<<endl;
+  int client_socket = accept(socke, (struct sockaddr*) &address, (socklen_t*)&address);
     if(client_socket == -1){
-        cerr << "Error accepting client" << endl;
+      cerr << "Error accepting client" << endl;
         return;
     }
+  cout<<"waiting"<<endl;
 
-    char* buffer;
-    while (read(client_socket, buffer, 1024)){
-        for(int i = 0; i < 36 ; i++){
-        string delimiter = ",";
-        string token = string(buffer).substr(0, string(buffer).find(delimiter));
-        buffer += delimiter.length();
-
+    char buffer[1024] = {0};
+    while (true){
+      read(client_socket, buffer, 1024);;
+//      string buf(buffer);
+      char delimiter = ',';
+      int m = 0;
+      int j = 0;
+      for(int i = 0; i < 36 ; i++){
+          while ((buffer[j] != delimiter) && (buffer[j] != '\0')){
+          j++;
+        }
+          string token = "";
+          while (m < j){
+            token += buffer[m];
+            m++;
+          }
+          m++;
+//        string token = string(buffer).substr(m, j-m);
+//        buffer += delimiter.length();
+//        buf.erase(0, delimiter.length());
+        cout<<token;
         pathMap[table[i]].SetValue(strtof((string(buffer)).c_str(),0));
+        j++;
         }
     }
+  cout<<"waiting2"<<endl;
 
     close(client_socket);
 }

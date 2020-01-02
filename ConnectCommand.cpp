@@ -43,6 +43,9 @@ int ConnectCommand::clientConnect(int PORT, const char *hostAddress) {
 int ConnectCommand::execute(vector<string> &arguments) {
   // converting the port number(string) to int
   stringstream geek(arguments[2]);
+
+
+  cout<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"<<endl;
   int port = 0;
   geek >> port;
   // converting the address(string) to const char*

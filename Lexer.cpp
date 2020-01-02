@@ -20,9 +20,10 @@ void Lexer::lexing() {
     }
     newFile.close(); //close the file object.
   }
-  for (int i = 0; i < v1.size(); i++) {
-    cout << v1[i] + "\n";
-  }
+  //printing all vector elements
+//  for (int i = 0; i < v1.size(); i++) {
+//    cout << v1[i] + "\n";
+//  }
 }
 void Lexer::fixLine(string &line) {
   line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());

@@ -32,6 +32,7 @@ int ConnectCommand::clientConnect(int PORT, string hostAddress) {
   while (isParsing) {
     if (!setQueue.empty()) {
       string message = "set " + setQueue.front().GetSim() + " " + to_string(setQueue.front().GetValue()) + "\r\n";
+      cout << "update value check" << endl;
       setQueue.pop();
       ssize_t return_val;
       return_val = write(client_socket, message.c_str(), message.length());
@@ -58,7 +59,6 @@ int ConnectCommand::execute(vector<string> &arguments) {
   // converting the port number(string) to int
   stringstream geek(arguments[2]);
 
-  cout<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"<<endl;
   int port = 0;
   geek >> port;
   // converting the address(string) to const char*

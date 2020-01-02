@@ -13,17 +13,20 @@ int defineVarCommand::execute(vector<string> &arguments) {
   Var var1;
   //definition
   //there is binding
-  cout << "chack1" << endl;
 
-  if (arguments[1]=="->" || arguments[1]=="<-") {
-    var1.SetBoundWay(arguments[1]);
-    var1.SetSim(arguments[2]);
+
+  if (arguments[2]=="->" || arguments[2]=="<-") {
+    var1.SetBoundWay(arguments[2]);
+    var1.SetSim(arguments[4]);
+    cout << arguments[1]+" "+var1.GetBoundWay()+ " " + var1.GetSim() << endl;
+
   }
     // there is not binding
   else {
     var1.SetSim(arguments[1]);
+    cout << arguments[1]+var1.GetSim() << endl;
   }
 
-  varProgram[arguments[0]] = var1;
+  varProgram[arguments[1]] = var1;
   return 5;
 }

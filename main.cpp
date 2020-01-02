@@ -18,16 +18,16 @@ void resetCommandMap(unordered_map<string,Var> &varSim,
     commandMap["while"] = new loopCommands;
 
     // --- change zeros to the right value!
-    commandMap["breaks"] = new SetVarCommand("breaks", 0,varSim, varProgram, 0);
-    commandMap["throttle"] = new SetVarCommand("throttle", 0,varSim, varProgram, 0);
-    commandMap["heading"] = new SetVarCommand("heading", 0,varSim, varProgram, 0);
-    commandMap["airspeed"] = new SetVarCommand("airspeed", 0,varSim, varProgram, 0);
-    commandMap["roll"] = new SetVarCommand("roll", 0,varSim, varProgram, 0);
-    commandMap["pitch"] = new SetVarCommand("pitch", 0,varSim, varProgram, 0);
-    commandMap["rudder"] = new SetVarCommand("rudder", 0,varSim, varProgram, 0);
-    commandMap["aileron"] = new SetVarCommand("aileron", 0,varSim, varProgram, 0);
-    commandMap["elevator"] = new SetVarCommand("elevator", 0,varSim, varProgram, 0);
-    commandMap["alt"] = new SetVarCommand("alt", 0,varSim, varProgram, 0);
+    commandMap["breaks"] = new SetVarCommand(varSim, varProgram);
+    commandMap["throttle"] = new SetVarCommand(varSim, varProgram);
+    commandMap["heading"] = new SetVarCommand(varSim, varProgram);
+    commandMap["airspeed"] = new SetVarCommand(varSim, varProgram);
+    commandMap["roll"] = new SetVarCommand(varSim, varProgram);
+    commandMap["pitch"] = new SetVarCommand(varSim, varProgram);
+    commandMap["rudder"] = new SetVarCommand(varSim, varProgram);
+    commandMap["aileron"] = new SetVarCommand(varSim, varProgram);
+    commandMap["elevator"] = new SetVarCommand(varSim, varProgram);
+    commandMap["alt"] = new SetVarCommand(varSim, varProgram);
 }
 
 int main() {

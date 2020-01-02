@@ -69,7 +69,7 @@ int ConnectCommand::execute(vector<string> &arguments) {
 //  // opening a thread by
   thread threadClient(&ConnectCommand::clientConnect, this, port,adress2);
   threadClient.detach();
-  return 1;
+  return 3;
 }
 
 

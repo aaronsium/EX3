@@ -25,4 +25,5 @@ int defineVarCommand::execute(vector<string> &arguments) {
   }
 
   varProgram[arguments[0]] = var1;
+  return 5;
 }

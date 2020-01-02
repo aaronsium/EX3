@@ -131,10 +131,8 @@ protected:
     string table[36];
 public:
     OpenServer(unordered_map<string,Var> &varProgram);
-
-public:
     int execute(vector<string> &v) override;
-    void Server();
+    void Server(int client_socket);
     void tableUpdate();
 };
 

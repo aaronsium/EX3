@@ -4,6 +4,7 @@ using namespace std;
 #define PORT 8081
 bool isParsing = false;
 bool isServerOpen= false;
+bool serverReady = false;
 queue<Var> setQueue ;
 
 void resetCommandMap(unordered_map<string,Var> &varSim,

@@ -42,7 +42,7 @@ int OpenServer:: execute(vector<string> &v){
 
 
     thread serverThread(&OpenServer::Server, this, client_socket);
-    serverThread.join();
+    serverThread.detach();
 
     return 2;
 }
@@ -51,7 +51,7 @@ void OpenServer:: Server(int client_socket){
   cout<<"waiting"<<endl;
 
     char buffer[1024] = {0};
-    while (read(client_socket, buffer, 1024)){
+    while (read(client_socket, buffer, 1024 ) && isParsing){
       char delimiter = ',';
       int m = 0;
       int j = 0;

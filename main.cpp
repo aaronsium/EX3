@@ -7,7 +7,7 @@ bool isServerOpen= false;
 queue<Var> setQueue ;
 
 void resetCommandMap(unordered_map<string,Var> &varSim,
-        unordered_map<string,Var> &varProgram, unordered_map<string, Command*> &commandMap){
+    unordered_map<string,Var> &varProgram, unordered_map<string, Command*> &commandMap){
     commandMap["openDataServer"] = new OpenServer(varProgram);
     commandMap["connectControlClient"] = new ConnectCommand;
     commandMap["var"] = new defineVarCommand(varSim, varProgram);

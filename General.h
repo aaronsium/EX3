@@ -48,9 +48,9 @@ class Lexer {
 
 class Var {
  private:
-  double value;
+  double value =  0.0;
   string BoundWay = "-1";
-  string sim;
+  string sim = "";
  public:
   void SetValue(double value);
   void SetBoundWay(const string &bound_way);
@@ -69,22 +69,22 @@ extern  queue<Var> setQueue ;
 
 class defineVarCommand : public Command {
  private:
-  unordered_map<string, Var> varSim;
-  unordered_map<string, Var> varProgram;
+  unordered_map<string, Var> *varSim;
+  unordered_map<string, Var> *varProgram;
  public:
-  defineVarCommand(unordered_map<string, Var> varSim, unordered_map<string, Var> varProgram);
+  defineVarCommand(unordered_map<string, Var> &varSim, unordered_map<string, Var> &varProgram);
   int execute(vector<string> &arguments);
 };
 
 class SetVarCommand : public Command {
  private:
   int sockfd;
-  unordered_map<string, Var> varSim;
-  unordered_map<string, Var> varProgram;
+  unordered_map<string, Var> *varSim;
+  unordered_map<string, Var> *varProgram;
   string name;
   double value;
  public:
-  SetVarCommand(unordered_map<string, Var> varSim,unordered_map<string, Var> varProgram);
+  SetVarCommand(unordered_map<string, Var> &varSim,unordered_map<string, Var> &varProgram);
   int execute(vector<string> &arguments);
   ssize_t sendMessage(string path);
 };

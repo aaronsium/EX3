@@ -11,7 +11,7 @@ OpenServer::OpenServer(unordered_map<string,Var> &varProgram){
 int OpenServer:: execute(vector<string> &v){
     port = stoi(v[1]);
     tableUpdate();
-    thread serverThread(&OpenServer::Server, this, newSocket());
+    thread serverThread(&OpenServer::Server, this, OpenServer:: newSocket());
     serverThread.join();
 
     return 2;

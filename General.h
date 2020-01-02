@@ -134,6 +134,7 @@ public:
     int execute(vector<string> &v) override;
     void Server(int client_socket);
     void tableUpdate();
+    int newSocket();
 };
 
 class Print: public Command {

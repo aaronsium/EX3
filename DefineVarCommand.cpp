@@ -28,5 +28,6 @@ int defineVarCommand::execute(vector<string> &arguments) {
   }
 
   (*varProgram)[arguments[1]] = var1;
+  (*varSim)[(*varProgram)[arguments[1]].GetSim()] = var1;
   return 5;
 }

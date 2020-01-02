@@ -11,17 +11,11 @@ OpenServer::OpenServer(unordered_map<string,Var> &varProgram){
 int OpenServer:: execute(vector<string> &v){
     port = stoi(v[1]);
     tableUpdate();
-    thread serverThread(&OpenServer::Server, this);
-    serverThread.detach();
 
-    return 2;
-}
-
-void OpenServer:: Server(){
     int socke = socket(AF_INET, SOCK_STREAM, 0);
     if(socke == -1){
         cerr << "Could not create a socket" << endl;
-        return;
+        return -1;
     }
 
     sockaddr_in address;
@@ -31,26 +25,33 @@ void OpenServer:: Server(){
 
     if(bind(socke, (struct sockaddr*) &address, sizeof(address)) == -1){
         cerr << "Could not bind the socket to an IP" << endl;
-        return;
+        return -2;
     }
 
     if(listen(socke, 5) == -1){
         cerr << "Error during listening command" << endl;
-        return;
+        return -3;
     }
 
     cout<<"waiting"<<endl;
-  int client_socket = accept(socke, (struct sockaddr*) &address, (socklen_t*)&address);
+    int client_socket = accept(socke, (struct sockaddr*) &address, (socklen_t*)&address);
     if(client_socket == -1){
-      cerr << "Error accepting client" << endl;
-        return;
+        cerr << "Error accepting client" << endl;
+        return -4;
     }
+
+
+    thread serverThread(&OpenServer::Server, this, client_socket);
+    serverThread.join();
+
+    return 2;
+}
+
+void OpenServer:: Server(int client_socket){
   cout<<"waiting"<<endl;
 
     char buffer[1024] = {0};
-    while (true){
-      read(client_socket, buffer, 1024);;
-//      string buf(buffer);
+    while (read(client_socket, buffer, 1024)){
       char delimiter = ',';
       int m = 0;
       int j = 0;
@@ -64,18 +65,17 @@ void OpenServer:: Server(){
             m++;
           }
           m++;
-//        string token = string(buffer).substr(m, j-m);
-//        buffer += delimiter.length();
-//        buf.erase(0, delimiter.length());
-        cout<<token;
-        pathMap[table[i]].SetValue(strtof((string(buffer)).c_str(),0));
+        cout<<token<< " - ";
+        pathMap[table[i]].SetValue(strtof((string(token)).c_str(),0));
+        cout<<table[i] << " + " <<pathMap[table[i]].GetValue()<<endl;
         j++;
-        }
+      }
     }
   cout<<"waiting2"<<endl;
 
     close(client_socket);
 }
+
 
 void OpenServer::tableUpdate(){
     table[0] = "/instrumentation/airspeed-indicator/indicated-speed-kt";

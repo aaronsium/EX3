@@ -12,7 +12,7 @@ void resetCommandMap(unordered_map<string,Var> &varSim,
     commandMap["openDataServer"] = new OpenServer(varProgram);
     commandMap["connectControlClient"] = new ConnectCommand;
     commandMap["var"] = new defineVarCommand(varSim, varProgram);
-    commandMap["Print"] = new Print;
+    commandMap["Print"] = new Print(varSim, varProgram);
     commandMap["Sleep"] = new Sleep;
     commandMap["if"] = new ifCommand;
     commandMap["while"] = new loopCommands;

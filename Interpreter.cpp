@@ -260,4 +260,7 @@ bool Interpreter:: unaryCheck(string opr, string last,int roundNumber ){
 Interpreter::~Interpreter() {
 
 }
+ map<string,string> &Interpreter::GetVariablesMap()  {
+  return variablesMap;
+}
 

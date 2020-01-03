@@ -25,7 +25,7 @@ using namespace std::literals::chrono_literals;
 extern bool isParsing;
 extern bool isServerOpen;
 extern bool serverReady;
-
+extern unordered_map<string,string> dynamicVariables;
 
 class Lexer {
  private:
@@ -140,8 +140,13 @@ public:
 };
 
 class Print: public Command {
+ private:
+  unordered_map<string, Var> *varSim;
+  unordered_map<string, Var> *varProgram;
 public:
+    Print(unordered_map<string, Var> &varSim,unordered_map<string, Var> &varProgram);
     int execute(vector<string> &v) override;
+    void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
 
 };
 
@@ -295,5 +300,5 @@ class Interpreter {
   void splitInput(string str);
   bool unaryCheck(string opr, string last,int roundNumber );
   virtual ~Interpreter();
-
+   map<string,string> &GetVariablesMap() ;
 };

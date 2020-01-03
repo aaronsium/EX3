@@ -21,7 +21,6 @@ void Parser:: parsing(){
         }
     }
 }
-
 vector<string> Parser:: cut( int m){
     auto first = v.cbegin() + m;
     auto last = v.cend();

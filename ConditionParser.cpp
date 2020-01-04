@@ -22,15 +22,15 @@ int ConditionParser::commandsCounter(vector<string> &arguments) {
 }
 bool ConditionParser::checkCondition(vector<string> &arguments) {
 
-Interpreter* i1 = new Interpreter();
-Interpreter* i2 = new Interpreter();
-  double A = 0;
-  double B = 0;
+Interpreter i1 ;
+Interpreter i2;
 
   //inserting to interpreter map
-  insertToMap((*this->varProgram),i1->GetVariablesMap());
-  A = i1->interpret(arguments[1])->calculate();
-  B = i2->interpret(arguments[3])->calculate();
+  insertToMap((*this->varProgram),i1.GetVariablesMap());
+  Expression *x = i1.interpret(arguments[1]);
+  Expression *y = i2.interpret(arguments[3]);
+  double A = x->calculate();
+  double B = y->calculate();
 
 if(arguments[2] == "=="){
 if(A==B){

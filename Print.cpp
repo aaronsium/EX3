@@ -20,7 +20,7 @@ int Print:: execute(vector<string> &v){
     insertToMap((*varProgram),i.GetVariablesMap());
 //    cout << " rpm + " <<varProgram["rpm"].GetSim()<<endl;
     Expression *e = i.interpret(s);
-    cout<< e->calculate() << endl;
+    cout<<"rpm- " <<e->calculate() << endl;
   }
 
 

@@ -9,7 +9,7 @@ ConnectCommand::ConnectCommand() {
 int ConnectCommand::clientConnect(int client_socket) {
   while (isParsing) {
     if (!setQueue.empty()) {
-      string message = "set " + setQueue.front().GetSim() + " " + to_string(setQueue.front().GetValue()) + " "+"\r\n";
+      string message = "set " + setQueue.front().GetSim() + " " + to_string(setQueue.front().GetValue()) + "\r\n";
       cout << "update" + message << endl;
       setQueue.pop();
       ssize_t return_val;
@@ -73,7 +73,7 @@ int ConnectCommand:: newSocket(string adress2, int port){
         cout << "Client is now connected to server" << endl;
     }
 
-    return is_Connect;
+    return client_socket;
 }
 
 

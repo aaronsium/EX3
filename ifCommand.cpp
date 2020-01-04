@@ -4,6 +4,11 @@
 
 #include "General.h"
 
+ifCommand::ifCommand(unordered_map<string, Var*> &var_sim,
+                     unordered_map<string, Var> &var_program) : ConditionParser(var_sim, var_program) {
+
+}
+
 int ifCommand:: execute(vector<string> &v){
     int scopeSize = commandsCounter(v);
 

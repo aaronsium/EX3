@@ -6,16 +6,20 @@ bool isParsing = false;
 bool isServerOpen= false;
 bool serverReady = false;
 queue<Var> setQueue ;
+bool loop = false;
+int stepsLoop = 0;
+vector<string> loopLex;
 
-void resetCommandMap(unordered_map<string,Var> &varSim,
+
+void resetCommandMap(unordered_map<string,Var*> &varSim,
     unordered_map<string,Var> &varProgram, unordered_map<string, Command*> &commandMap){
-    commandMap["openDataServer"] = new OpenServer(varProgram);
+    commandMap["openDataServer"] = new OpenServer(varSim);
     commandMap["connectControlClient"] = new ConnectCommand;
-    commandMap["var"] = new defineVarCommand(varSim, varProgram);
-    commandMap["Print"] = new Print(varSim, varProgram);
+    commandMap["var"] = new DefineVarCommand(varSim, varProgram);
+    commandMap["Print"] = new Print(varProgram);
     commandMap["Sleep"] = new Sleep;
-    commandMap["if"] = new ifCommand;
-    commandMap["while"] = new loopCommands;
+    commandMap["if"] = new ifCommand(varSim, varProgram);
+    commandMap["while"] = new loopCommands(varSim, varProgram);
 
     commandMap["mixture"] = new SetVarCommand(varSim, varProgram);
     commandMap["warp"] = new SetVarCommand(varSim, varProgram);
@@ -46,7 +50,7 @@ int main() {
   Lexer lex("fly.txt");
   lex.lexing();
   // creating maps of variables and defineVarCommand
-  unordered_map<string,Var> varSim;
+  unordered_map<string,Var*> varSim;
   unordered_map<string,Var> varProgram;
 //  defineVarCommand VarCommand (varSim, varProgram); --- defined in commandMap
 

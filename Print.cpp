@@ -1,26 +1,24 @@
 //
 // Created by yaffa on 18/12/2019.
 //
-
 #include "General.h"
 
-Print::Print(unordered_map<string, Var> &varSim, unordered_map<string, Var> &varProgram) {
-  this->varSim = &varSim;
+Print::Print(unordered_map<string, Var> &varProgram)  {
   this->varProgram = &varProgram;
 }
 
 int Print:: execute(vector<string> &v){
-    string s = v[1];
+  string s = v[1];
   //if it's a string
   if(s[0] == '"'){
-        cout  << v[1] <<endl;
-   //else -> if the variable exist in varProgram->insert it to interpreter's map.
-    } else if((*varProgram).find(s) == (*varProgram).end()){
-        // not exist -> need to throw exception
-    }else{
+    cout  << v[1] <<endl;
+    //else -> if the variable exist in varProgram->insert it to interpreter's map.
+  } else if((*varProgram).find(s) == (*varProgram).end()){
+    // not exist -> need to throw exception
+  }else{
     Interpreter i;
     insertToMap((*varProgram),i.GetVariablesMap());
-
+//    cout << " rpm + " <<varProgram["rpm"].GetSim()<<endl;
     Expression *e = i.interpret(s);
     cout<< e->calculate() << endl;
   }
@@ -50,12 +48,11 @@ int Print:: execute(vector<string> &v){
 //    }
 
 
-    return 2;
+  return 2;
 }
 
 void Print::insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap) {
   //iterate over the sourceMap and copping each element to destMap
-  map<string, int>::iterator it;
   for (auto const& x : sourceMap)
   {
     //convert the value from double to string.
@@ -67,4 +64,3 @@ void Print::insertToMap(unordered_map<string, Var> &sourceMap, map<string,string
   }
 
 }
-

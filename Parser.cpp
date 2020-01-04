@@ -12,7 +12,11 @@ void Parser:: parsing(){
     //activate all commands in the lexer
     while(i < v.size()){
         while(v[i] == "}"){
+          if(loop) {
+           i=i-stepsLoop;
+          }else {
             i++;
+          }
         }
         c = commandMap[v[i]];
         if(c != NULL){

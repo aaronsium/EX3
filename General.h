@@ -1,7 +1,6 @@
 //
 // Created by aharon on 18/12/2019.
 //
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -25,7 +24,9 @@ using namespace std::literals::chrono_literals;
 extern bool isParsing;
 extern bool isServerOpen;
 extern bool serverReady;
-extern unordered_map<string,string> dynamicVariables;
+extern bool loop;
+extern int stepsLoop;
+extern vector<string> loopLex;
 
 class Lexer {
  private:
@@ -43,7 +44,9 @@ class Lexer {
 
 class Var {
  private:
+
   double value =  0.0;
+  string name = "";
   string BoundWay = "-1";
   string sim = "";
  public:
@@ -53,6 +56,8 @@ class Var {
   double GetValue() const;
   const string &GetBoundWay() const;
   const string &GetSim() const;
+  const string &GetName() const;
+  void SetName(const string &name);
  public:
   Var();
 
@@ -62,24 +67,25 @@ class Var {
 extern  queue<Var> setQueue ;
 //
 
-class defineVarCommand : public Command {
+class DefineVarCommand : public Command {
  private:
-  unordered_map<string, Var> *varSim;
+  unordered_map<string, Var*> *varSim;
   unordered_map<string, Var> *varProgram;
  public:
-  defineVarCommand(unordered_map<string, Var> &varSim, unordered_map<string, Var> &varProgram);
+  DefineVarCommand(unordered_map<string, Var*> &varSim, unordered_map<string, Var> &varProgram);
+  void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
   int execute(vector<string> &arguments);
 };
 
 class SetVarCommand : public Command {
  private:
   int sockfd;
-  unordered_map<string, Var> *varSim;
+  unordered_map<string, Var*> *varSim;
   unordered_map<string, Var> *varProgram;
   string name;
   double value;
  public:
-  SetVarCommand(unordered_map<string, Var> &varSim,unordered_map<string, Var> &varProgram);
+  SetVarCommand(unordered_map<string, Var*> &varSim,unordered_map<string, Var> &varProgram);
   int execute(vector<string> &arguments);
   ssize_t sendMessage(string path);
 };
@@ -96,17 +102,21 @@ class ConnectCommand : public Command {
 class ConditionParser : public Command {
  protected:
   bool condition = false;
+  unordered_map<string, Var*> *varSim;
+  unordered_map<string, Var> *varProgram;
  public:
-  ConditionParser();
+  ConditionParser(unordered_map<string, Var*> &varSim,unordered_map<string, Var> &varProgram);
   int execute(vector<string> &arguments) override;
   int commandsCounter(vector<string> &arguments);
   bool checkCondition (vector<string> &arguments);
+ void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
 };
 
 class loopCommands : public ConditionParser {
 
  public:
-  loopCommands();
+  loopCommands(unordered_map<string, Var*> &var_sim,
+               unordered_map<string, Var> &var_program);
   int execute(vector<string> &arguments);
 };
 
@@ -119,51 +129,56 @@ class Expression {
 
 
 class ifCommand: public ConditionParser {
-public:
-    int execute(vector<string> &v) override;
-    vector<string> cut(vector<string> &v, int m);
+ public:
+  ifCommand(unordered_map<string, Var*> &var_sim,
+            unordered_map<string, Var> &var_program);
+  int execute(vector<string> &v) override;
+  vector<string> cut(vector<string> &v, int m);
 };
 
 class OpenServer: public Command{
-protected:
-    unordered_map<string,Var> pathMap;
-    string ip = "";
-    int port;
-    int socke;
-    string table[36];
-public:
-    OpenServer(unordered_map<string,Var> &varProgram);
-    int execute(vector<string> &v) override;
-    void Server(int client_socket);
-    void tableUpdate();
-    int newSocket();
+ protected:
+  unordered_map<string,Var*> *pathMap;
+  unordered_map<string,Var> *varProgram;
+  string ip = "";
+  int port;
+  int socke;
+  string table[36];
+ public:
+//  OpenServer(unordered_map<string, Var> &varProgram_)  :    varProgram(varProgram_) {};
+  OpenServer(unordered_map<string,Var*> &varSim) ;
+
+  int execute(vector<string> &v) override;
+  void Server(int client_socket);
+  void tableUpdate();
+  int newSocket();
 };
 
 class Print: public Command {
  private:
-  unordered_map<string, Var> *varSim;
   unordered_map<string, Var> *varProgram;
-public:
-    Print(unordered_map<string, Var> &varSim,unordered_map<string, Var> &varProgram);
-    int execute(vector<string> &v) override;
-    void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
+ public:
+//  Print(unordered_map<string, Var> &varSim,unordered_map<string, Var> &varProgram);
+  Print(unordered_map<string, Var> &varProgram) ;
+  int execute(vector<string> &v) override;
+  void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
 
 };
 
 class Sleep: public Command{
-public:
-    int execute(vector<string> &v) override;
-    void sleep(int milli);
+ public:
+  int execute(vector<string> &v) override;
+  void sleep(int milli);
 };
 
 class Parser {
-private:
-    unordered_map<string, Command*> commandMap;
-    vector<string> v;
-public:
-    Parser(unordered_map<string, Command *> &map, const vector<string> &vec);
-    void parsing();
-    vector<string> cut(int m);
+ private:
+  unordered_map<string, Command*> commandMap;
+  vector<string> v;
+ public:
+  Parser(unordered_map<string, Command *> &map, const vector<string> &vec);
+  void parsing();
+  vector<string> cut(int m);
 };
 
 
@@ -300,5 +315,5 @@ class Interpreter {
   void splitInput(string str);
   bool unaryCheck(string opr, string last,int roundNumber );
   virtual ~Interpreter();
-   map<string,string> &GetVariablesMap() ;
+  map<string,string> &GetVariablesMap() ;
 };

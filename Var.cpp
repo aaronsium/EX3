@@ -25,4 +25,10 @@ const string &Var::GetBoundWay() const {
 const string &Var::GetSim() const {
   return sim;
 }
+const string &Var::GetName() const {
+  return name;
+}
+void Var::SetName(const string &name) {
+  Var::name = name;
+}
 

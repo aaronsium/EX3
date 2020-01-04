@@ -3,7 +3,7 @@
 //
 
 #include "General.h"
-SetVarCommand::SetVarCommand(unordered_map<string, Var> &varSim,unordered_map<string, Var> &varProgram){
+SetVarCommand::SetVarCommand(unordered_map<string, Var*> &varSim,unordered_map<string, Var> &varProgram){
   this->varSim = &varSim;
   this->varProgram = &varProgram;
 }

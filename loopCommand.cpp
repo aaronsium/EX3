@@ -18,7 +18,8 @@ int loopCommands::execute(vector<string> &arguments) {
   }
     //condition is false -> jump command's quantity steps forward(out of the scope)
   else{
-    return 5;
+    loop==false;
+    return 5+stepsLoop;
   }
 
 }

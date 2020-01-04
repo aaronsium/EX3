@@ -14,6 +14,7 @@ void Parser:: parsing(){
         while(v[i] == "}"){
           if(loop) {
            i=i-stepsLoop;
+           loop=false;
           }else {
             i++;
           }

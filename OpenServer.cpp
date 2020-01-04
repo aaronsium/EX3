@@ -4,8 +4,8 @@
 
 #include "General.h"
 
-OpenServer::OpenServer(unordered_map<string,Var> &varProgram){
-    this -> pathMap = varProgram;
+OpenServer::OpenServer(unordered_map<string,Var*> &varSim){
+    this -> pathMap = varSim;
 }
 
 int OpenServer:: execute(vector<string> &v){
@@ -67,52 +67,57 @@ void OpenServer:: Server(int client_socket){
                 m++;
             }
             m++;
-          //ביטלתי את ההדפסות בשביל לבדוק הדפסות של הלקוח
-//        cout<<token<< " - ";
-         pathMap[table[i]].SetValue(strtof((string(token)).c_str(),0));
-//        cout<<table[i] << " + " <<pathMap[table[i]].GetValue()<<endl;
+
+         if(pathMap.find(table[i]) == pathMap.end()) {
+             if (pathMap[table[i]]->GetBoundWay() == "<-") {
+                 pathMap[table[i]]->SetValue(strtof((string(token)).c_str(), 0));
+             }
+         }
+//        cout << "[" << i << "]"<<pathMap[table[i]].GetValue()<<" ";
+         cout << "[" << i << "]"<<token<<" ";
          j++;
         }
+        cout<<endl;
     }
     close(client_socket);
 }
 
 
 void OpenServer::tableUpdate(){
-    table[0] = "/instrumentation/airspeed-indicator/indicated-speed-kt";
-    table[1] = "/sim/time/warp";
-    table[2] = "/controls/switches/magnetos";
-    table[3] = "/instrumentation/heading-indicator/offset-deg";
-    table[4] = "/instrumentation/altimeter/indicated-altitude-ft";
-    table[5] = "/instrumentation/altimeter/pressure-alt-ft";
-    table[6] = "/instrumentation/attitude-indicator/indicated-pitch-deg";
-    table[7] = "/instrumentation/attitude-indicator/indicated-roll-deg";
-    table[8] = "/instrumentation/attitude-indicator/internal-pitch-deg";
-    table[9] = "/instrumentation/attitude-indicator/internal-roll-deg";
-    table[10] = "/instrumentation/encoder/indicated-altitude-ft";
-    table[11] = "/instrumentation/encoder/pressure-alt-ft";
-    table[12] = "/instrumentation/gps/indicated-altitude-ft";
-    table[13] = "/instrumentation/gps/indicated-ground-speed-kt";
-    table[14] = "/instrumentation/gps/indicated-vertical-speed";
-    table[15] = "/instrumentation/heading-indicator/indicated-heading-deg";
-    table[16] = "/instrumentation/magnetic-compass/indicated-heading-deg";
-    table[17] = "/instrumentation/slip-skid-ball/indicated-slip-skid";
-    table[18] = "/instrumentation/turn-indicator/indicated-turn-rate";
-    table[19] = "/instrumentation/vertical-speed-indicator/indicated-speed-fpm";
-    table[20] = "/controls/flight/aileron";
-    table[21] = "/controls/flight/elevator";
-    table[22] = "/controls/flight/rudder";
-    table[23] = "/controls/flight/flaps";
-    table[24] = "/controls/engines/engine/throttle";
-    table[25] = "/controls/engines/current-engine/throttle";
-    table[26] = "/controls/switches/master-avionics";
-    table[27] = "/controls/switches/starter";
-    table[28] = "/engines/active-engine/auto-start";
-    table[29] = "/controls/flight/speedbrake";
-    table[30] = "/sim/model/c172p/brake-parking";
-    table[31] = "/controls/engines/engine/primer";
-    table[32] = "/controls/engines/current-engine/mixture";
-    table[33] = "/controls/switches/master-bat";
-    table[34] = "/controls/switches/master-alt";
-    table[35] = "/engines/engine/rpm";
+    table[0] = "instrumentation/airspeed-indicator/indicated-speed-kt";
+    table[1] = "sim/time/warp";
+    table[2] = "controls/switches/magnetos";
+    table[3] = "instrumentation/heading-indicator/offset-deg";
+    table[4] = "instrumentation/altimeter/indicated-altitude-ft";
+    table[5] = "instrumentation/altimeter/pressure-alt-ft";
+    table[6] = "instrumentation/attitude-indicator/indicated-pitch-deg";
+    table[7] = "instrumentation/attitude-indicator/indicated-roll-deg";
+    table[8] = "instrumentation/attitude-indicator/internal-pitch-deg";
+    table[9] = "instrumentation/attitude-indicator/internal-roll-deg";
+    table[10] = "instrumentation/encoder/indicated-altitude-ft";
+    table[11] = "instrumentation/encoder/pressure-alt-ft";
+    table[12] = "instrumentation/gps/indicated-altitude-ft";
+    table[13] = "instrumentation/gps/indicated-ground-speed-kt";
+    table[14] = "instrumentation/gps/indicated-vertical-speed";
+    table[15] = "instrumentation/heading-indicator/indicated-heading-deg";
+    table[16] = "instrumentation/magnetic-compass/indicated-heading-deg";
+    table[17] = "instrumentation/slip-skid-ball/indicated-slip-skid";
+    table[18] = "instrumentation/turn-indicator/indicated-turn-rate";
+    table[19] = "instrumentation/vertical-speed-indicator/indicated-speed-fpm";
+    table[20] = "controls/flight/aileron";
+    table[21] = "controls/flight/elevator";
+    table[22] = "controls/flight/rudder";
+    table[23] = "controls/flight/flaps";
+    table[24] = "controls/engines/engine/throttle";
+    table[25] = "controls/engines/current-engine/throttle";
+    table[26] = "controls/switches/master-avionics";
+    table[27] = "controls/switches/starter";
+    table[28] = "engines/active-engine/auto-start";
+    table[29] = "controls/flight/speedbrake";
+    table[30] = "sim/model/c172p/brake-parking";
+    table[31] = "controls/engines/engine/primer";
+    table[32] = "controls/engines/current-engine/mixture";
+    table[33] = "controls/switches/master-bat";
+    table[34] = "controls/switches/master-alt";
+    table[35] = "engines/engine/rpm";
 }

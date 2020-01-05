@@ -6,6 +6,7 @@
 ConnectCommand::ConnectCommand() {
 }
 
+
 int ConnectCommand::clientConnect(int client_socket) {
   while (isParsing) {
     if (!setQueue.empty()) {

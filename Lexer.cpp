@@ -16,6 +16,9 @@ void Lexer::lexing() {
   if (newFile.is_open()) {   //checking whether the file is open
     string line;
     while (getline(newFile, line)) { //read data from file object and put it into string.
+      if(line == "Print(rpm)"){
+        int x=1;
+      }
       fixLine(line);
     }
     newFile.close(); //close the file object.
@@ -63,21 +66,31 @@ void Lexer::removeWhite(string line) {
   if (line[0]!='"') {
     string s1 = "while";
     string s2 = "if";
-    if (isprefix(line, s1), isprefix(line, s2)) {
+    if (isprefix(line, s1) || isprefix(line, s2)) {
       string variable = "";
       string value = "";
       string operat = "";
-      int counter = 0;
+      string condition = "";
 
+      int counter = 0;
+      while (line[counter]!=' ') {
+        condition = condition + line[counter];
+        counter++;
+      }
       while (line[counter]!='>' && line[counter]!='<' && line[counter]!='=') {
         if (line[counter]!=' ') {
           variable = variable + line[counter];
         }
         counter++;
       }
-      while (line[counter]=='>' || line[counter]=='<' || line[counter]=='=') {
-        operat = operat + line[counter];
+      while (line[counter]==' ') {
         counter++;
+      }
+      while (line[counter]=='>' || line[counter]=='<' || line[counter]=='=') {
+        while(line[counter]!=' ') {
+          operat = operat + line[counter];
+          counter++;
+        }
       }
 
       while (line[counter]!='{') {
@@ -86,24 +99,26 @@ void Lexer::removeWhite(string line) {
         }
         counter++;
       }
+      this->v1.push_back(condition);
       this->v1.push_back(variable);
-      this->v1.push_back(value);
       this->v1.push_back(operat);
+      this->v1.push_back(value);
       this->v1.push_back("{");
     } else {
 
+      vector<string> strings;
+      istringstream f(line);
+      string s;
+      while (getline(f, s, ' ')) {
+        if(s!=""){
+          this->v1.push_back(s);
+        }
+      }
     }
-    vector<string> strings;
-    istringstream f(line);
-    string s;
-    while (getline(f, s, ' ')) {
-      this->v1.push_back(s);
-    }
-  } else {
 
+  }else {
     this->v1.push_back(line);
   }
-
 }
 const vector<string> &Lexer::GetV1() const {
   return v1;

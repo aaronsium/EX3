@@ -31,11 +31,11 @@ Interpreter i2;
   Expression *y = i2.interpret(arguments[3]);
   double A = x->calculate();
   double B = y->calculate();
-  if(B==1000){
+  if(A<750){
     int x=1;
   }
-     cout << A<<endl;
 
+cout<<A<<endl;
 
 
   if(arguments[2] == "=="){

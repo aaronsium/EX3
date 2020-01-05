@@ -52,6 +52,7 @@ int OpenServer:: newSocket(){
 
 void OpenServer:: Server(int client_socket){
   cout << "Server is now listening" << endl;
+  isServerOpen = true;
   char buffer[1024] = {0};
   while (read(client_socket, buffer, 1024 ) && isParsing){
     serverReady = true;

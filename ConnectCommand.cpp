@@ -10,7 +10,7 @@ int ConnectCommand::clientConnect(int client_socket) {
   while (isParsing) {
     if (!setQueue.empty()) {
       string message = "set " + setQueue.front().GetSim() + " " + to_string(setQueue.front().GetValue()) + "\r\n";
-      cout << "update" + message << endl;
+//      cout << "update" + message << endl;
       setQueue.pop();
       ssize_t return_val;
       return_val = write(client_socket, message.c_str(), message.length());

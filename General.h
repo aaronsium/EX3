@@ -88,6 +88,7 @@ class SetVarCommand : public Command {
   SetVarCommand(unordered_map<string, Var*> &varSim,unordered_map<string, Var> &varProgram);
   int execute(vector<string> &arguments);
   ssize_t sendMessage(string path);
+  void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
 };
 
 class ConnectCommand : public Command {

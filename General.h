@@ -176,8 +176,12 @@ class Parser {
  private:
   unordered_map<string, Command*> commandMap;
   vector<string> v;
+  unordered_map<string, Var*> *varSim;
+  unordered_map<string, Var> *varProgram;
+
  public:
-  Parser(unordered_map<string, Command *> &map, const vector<string> &vec);
+  Parser(unordered_map<string, Command *> &map, const vector<string> &vec,
+          unordered_map<string, Var*> &sim,unordered_map<string, Var> &program);
   void parsing();
   vector<string> cut(int m);
 };

@@ -1,8 +1,11 @@
 #include "General.h"
 
-Parser:: Parser(unordered_map<string, Command *> &map, const vector<string> &vec){
+Parser:: Parser(unordered_map<string, Command *> &map, const vector<string> &vec,
+        unordered_map<string, Var*> &sim,unordered_map<string, Var> &program){
     this -> commandMap = map;
     this -> v = vec;
+    this->varSim = &sim;
+    this->varProgram = &program;
 }
 
 void Parser:: parsing(){
@@ -18,6 +21,11 @@ void Parser:: parsing(){
           }else {
             i++;
           }
+        }
+        if(v[i] == "var"){
+            if(commandMap.find(v[i+1]) == commandMap.end()){
+                commandMap[v[i+1]] = new SetVarCommand(*varSim, *varProgram);
+            }
         }
         c = commandMap[v[i]];
         if(c != NULL){

@@ -43,7 +43,6 @@ void resetCommandMap(unordered_map<string,Var*> &varSim,
     commandMap["elevator"] = new SetVarCommand(varSim, varProgram);
     commandMap["alt"] = new SetVarCommand(varSim, varProgram);
     commandMap["rpm"] = new SetVarCommand(varSim, varProgram);
-    commandMap["blc"] = new SetVarCommand(varSim, varProgram);
 
 }
 
@@ -59,7 +58,7 @@ int main() {
   // remember to insert VarCommand which created above, to the parser --- what that means?‬
   unordered_map<string, Command*> commandMap;
   resetCommandMap(varSim, varProgram, commandMap);
-  Parser par(commandMap, lex.GetV1()); // --- something wrong with the receiving of lex.GetV1() ---- אהרון : הגטר שלי מחזיר קונסט - הוספתי לך לקונסטרטור של הפארסר קונסט פשוט לפני הארגומנט של הוקטור
+  Parser par(commandMap, lex.GetV1(), varSim, varProgram); // --- something wrong with the receiving of lex.GetV1() ---- אהרון : הגטר שלי מחזיר קונסט - הוספתי לך לקונסטרטור של הפארסר קונסט פשוט לפני הארגומנט של הוקטור
   par.parsing();
   isParsing = false;
 

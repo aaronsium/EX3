@@ -20,30 +20,6 @@ void resetCommandMap(unordered_map<string,Var*> &varSim,
     commandMap["Sleep"] = new Sleep;
     commandMap["if"] = new ifCommand(varSim, varProgram);
     commandMap["while"] = new loopCommands(varSim, varProgram);
-
-    commandMap["mixture"] = new SetVarCommand(varSim, varProgram);
-    commandMap["warp"] = new SetVarCommand(varSim, varProgram);
-    commandMap["magnetos"] = new SetVarCommand(varSim, varProgram);
-    commandMap["masterbat"] = new SetVarCommand(varSim, varProgram);
-    commandMap["masterlat"] = new SetVarCommand(varSim, varProgram);
-    commandMap["masterbat"] = new SetVarCommand(varSim, varProgram);
-    commandMap["masteravionics"] = new SetVarCommand(varSim, varProgram);
-    commandMap["brakeparking"] = new SetVarCommand(varSim, varProgram);
-    commandMap["primer"] = new SetVarCommand(varSim, varProgram);
-    commandMap["starter"] = new SetVarCommand(varSim, varProgram);
-    commandMap["autostart"] = new SetVarCommand(varSim, varProgram);
-    commandMap["breaks"] = new SetVarCommand(varSim, varProgram);
-    commandMap["throttle"] = new SetVarCommand(varSim, varProgram);
-    commandMap["heading"] = new SetVarCommand(varSim, varProgram);
-    commandMap["airspeed"] = new SetVarCommand(varSim, varProgram);
-    commandMap["roll"] = new SetVarCommand(varSim, varProgram);
-    commandMap["pitch"] = new SetVarCommand(varSim, varProgram);
-    commandMap["rudder"] = new SetVarCommand(varSim, varProgram);
-    commandMap["aileron"] = new SetVarCommand(varSim, varProgram);
-    commandMap["elevator"] = new SetVarCommand(varSim, varProgram);
-    commandMap["alt"] = new SetVarCommand(varSim, varProgram);
-    commandMap["rpm"] = new SetVarCommand(varSim, varProgram);
-
 }
 
 int main() {

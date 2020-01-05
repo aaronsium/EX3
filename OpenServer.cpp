@@ -75,10 +75,10 @@ void OpenServer:: Server(int client_socket){
         }
       }
 //        cout << "[" << i << "]"<<pathMap[table[i]].GetValue()<<" ";
-      cout << "[" << i << "]"<<token<<" ";
+//      cout << "[" << i << "]"<<token<<" ";
       j++;
     }
-    cout<<endl;
+//    cout<<endl;
   }
   close(client_socket);
 }

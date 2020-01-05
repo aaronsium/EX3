@@ -31,12 +31,31 @@ void Lexer::fixLine(string &line) {
   char *newLine = new char[line.length() + 1];
   std::strcpy(newLine, line.c_str());
   // splitting the tokens
-  char *token = strtok(newLine, ",()");
-  while (token!=NULL) {
-    string str(token);
-    removeWhite(str);
-    token = strtok(NULL, ",()");
-  }
+  string s1 = "while";
+  string s2 = "if";
+  string s3 = "var";
+  if (line.find('=') != std::string::npos && !(isprefix(line, s1) || isprefix(line, s2) || isprefix(line, s3))){
+    char *token = strtok(newLine, "=");
+    bool firstLoop= true;
+    while (token!=NULL) {
+      string str(token);
+      str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
+      this->v1.push_back(str);
+      if(firstLoop){
+        this->v1.push_back("=");
+      }
+      token = strtok(NULL, "=");
+      firstLoop = false;
+    }
+  }else{
+
+      char *token = strtok(newLine, ",()");
+      while (token!=NULL) {
+        string str(token);
+        removeWhite(str);
+        token = strtok(NULL, ",()");
+      }
+    }
   delete[] newLine;
 }
 

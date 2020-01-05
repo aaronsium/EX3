@@ -27,9 +27,9 @@ int DefineVarCommand::execute(vector<string> &arguments) {
         //if it's assignment operation
   else if (arguments[2]=="=") {
 
-    Interpreter *i1 = new Interpreter();
-    insertToMap((*varProgram),i1->GetVariablesMap());
-    var1.SetValue(i1->interpret(arguments[3])->calculate());
+    Interpreter i1;
+    insertToMap((*varProgram),i1.GetVariablesMap());
+    var1.SetValue(i1.interpret(arguments[3])->calculate());
   }
     // there is not binding
   else {

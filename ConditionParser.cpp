@@ -31,8 +31,14 @@ Interpreter i2;
   Expression *y = i2.interpret(arguments[3]);
   double A = x->calculate();
   double B = y->calculate();
+  if(B==1000){
+    int x=1;
+  }
+     cout << A<<endl;
 
-if(arguments[2] == "=="){
+
+
+  if(arguments[2] == "=="){
 if(A==B){
   return true;
 }
@@ -60,10 +66,9 @@ if(A==B){
   if(A<=B){
     return true;
   }
-}else{
-  return false;
 }
-
+loop = false;
+  return false;
 
 }
 

@@ -43,6 +43,8 @@ void resetCommandMap(unordered_map<string,Var*> &varSim,
     commandMap["elevator"] = new SetVarCommand(varSim, varProgram);
     commandMap["alt"] = new SetVarCommand(varSim, varProgram);
     commandMap["rpm"] = new SetVarCommand(varSim, varProgram);
+    commandMap["blc"] = new SetVarCommand(varSim, varProgram);
+
 }
 
 int main() {

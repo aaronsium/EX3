@@ -31,10 +31,11 @@ Interpreter i2;
   Expression *y = i2.interpret(arguments[3]);
   double A = x->calculate();
   double B = y->calculate();
+  //checkpoint
   if(A<750){
     int x=1;
   }
-
+//
 cout<<A<<endl;
 
 

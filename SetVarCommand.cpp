@@ -10,7 +10,11 @@ SetVarCommand::SetVarCommand(unordered_map<string, Var*> &varSim,unordered_map<s
 
 int SetVarCommand::execute(vector<string> &arguments) {
 
-
+//checkpoint
+  if(arguments[0]=="elevator"){
+    int x =1;
+  }
+  //
   Interpreter i2;
   Var *var1 = &((*varProgram)[arguments[0]]);
   insertToMap((*varProgram),i2.GetVariablesMap());

@@ -21,27 +21,25 @@ include "EX3.cpp"
 
 ## API
 
-### Pageres
-
-##### Lexer
+#### Lexer
 
 Type: `object`
 
 Lexer is reading a code from a file and rearrange
 the code in a array of strings.  
 
-##### parser
+#### parser
 
 Type: `object`
 
 Parser goes through the Lexer's array and activate
 the command's in the array.
 
-##### Command
+#### Command
 
 Type: `Interface`
 
-##### OpenServer
+#### OpenServer
 
 Type: `Command object`
 
@@ -49,7 +47,7 @@ OpenServer is opening a thread that run's a server.
 The server is reading information that send by the
 client ,the simulator, line by line.
 
-##### ConnectCommand
+#### ConnectCommand
 
 Type: `Command object`
 
@@ -57,26 +55,26 @@ ConnectCommand is opening a thread, in the
 thread we make connection to the simulator as
 client that sending information line by line.
 
-##### DefineVarCommand
+#### DefineVarCommand
 
 Type: `Command object`
 
 DefineVarCommand receive's an new variables of
 the plane and declare them in the program.
 
-##### SetVarCommand
+#### SetVarCommand
 
 Type: `Command object`
 
 SetVarCommand initialize plane's variable.
 
-##### SetVarCommand
+#### SetVarCommand
 
 Type: `Command object`
 
 SetVarCommand initialize plane's variable.
 
-##### ConditionParser
+#### ConditionParser
 
 Type: `Command object`
 
@@ -84,7 +82,7 @@ ConditionParser is in charge of commands that
 their operation is conditional. the conditions are
 if - `ifCommand`, while - `loopCommand`.
 
-##### variables
+#### variables
 
 - `varSim`: type unordered_map<string,Var*>.
             key- variable path, value- pointer to 

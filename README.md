@@ -1,5 +1,7 @@
 # EX3
 
+# ![pageres](media/promo.jpg)
+
 EX3 is an ‫‪interpreter‬‬ for unmanned aerial vehicle. 
 The vehicle is a plane that fly's in the virtual space of the flight simulator ‫‪FlightGear‬. 
 

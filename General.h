@@ -32,6 +32,7 @@ extern int stepsLoop;
 extern vector<string> loopLex;
 extern std::mutex mutex1;
 extern condition_variable isThreadEnd;
+extern condition_variable isThreadEnd2;
 
 
 

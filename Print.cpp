@@ -13,6 +13,7 @@ int Print:: execute(vector<string> &v){
     if(s[0] == '"'){
         int i = 1;
         char end = s[s.length() - 1];
+        //
         while (end != '"'){
             i++;
             s += " " + v[i];
@@ -32,31 +33,6 @@ int Print:: execute(vector<string> &v){
             cout<< e->calculate() << endl;
         }
     }
-
-
-
-
-
-
-
-//    if(commandMap[s]){
-//        cout  << commandMap[s] ->value <<endl;
-//    }
-//    else if(s[0] == '"'){
-//        cout  << v[1] <<endl;
-//    } else {
-//        string delimiter = " ";
-//
-//        size_t pos = 0;
-//        string token;
-//        while ((pos = s.find(delimiter)) != std::string::npos) {
-//            token = s.substr(0, pos);
-//            std::cout << token << std::endl;
-//            s.erase(0, pos + delimiter.length());
-//        }
-//        cout << s << endl;
-//    }
-
 
   return 2;
 }

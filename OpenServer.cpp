@@ -11,7 +11,9 @@ OpenServer::OpenServer(unordered_map<string, Var *> &varSim1) {
 
 int OpenServer::execute(vector<string> &v) {
   port = stoi(v[1]);
+  //inserting map with path of variables in the simulator
   tableUpdate();
+  //opening a new thread to run the server in it
   thread serverThread(&OpenServer::Server, this, OpenServer::newSocket());
   serverThread.detach();
 
@@ -52,6 +54,7 @@ int OpenServer::newSocket() {
 
 void OpenServer::Server(int client_socket) {
   cout << "Server is now listening" << endl;
+  //when server opened we can open client thread
   isServerOpen = true;
   char buffer[1024] = {0};
   while (read(client_socket, buffer, 1024) && isParsing) {
@@ -60,9 +63,11 @@ void OpenServer::Server(int client_socket) {
     int m = 0;
     int j = 0;
     for (int i = 0; i < 36; i++) {
+        // find next value
       while ((buffer[j]!=delimiter) && (buffer[j]!='\0')) {
         j++;
       }
+      // separate value from the rest of the string
       string token = "";
       while (m < j) {
         token += buffer[m];
@@ -70,7 +75,9 @@ void OpenServer::Server(int client_socket) {
       }
       m++;
 
+      // if variable was created in setCommand
       if (!(pathMap->find(table[i])==pathMap->end())) {
+          //if variable is defined to be update by simulator
         if ((*pathMap)[table[i]]->GetBoundWay()=="<-") {
           (*pathMap)[table[i]]->SetValue(strtof((string(token)).c_str(), 0));
         }
@@ -79,7 +86,7 @@ void OpenServer::Server(int client_socket) {
     }
   }
   close(client_socket);
-  cout << "thread end" << endl;
+  cout << "closing server thread" << endl;
   unique_lock<std::mutex> lock(mutex1);
   isThreadEnd.notify_all();
 }

@@ -10,7 +10,7 @@ The vehicle is a plane that fly's in the virtual space of the flight simulator â
 ```
 $ sudo add-apt-repository ppa:saiarot895/fligthgear
 $ sudo apt-get update
-$sudo apt-get install flightgear
+$ sudo apt-get install flightgear
 ```
 
 ## Usage

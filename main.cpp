@@ -11,7 +11,6 @@ int stepsLoop = 0;
 vector<string> loopLex;
 condition_variable isThreadEnd;
 condition_variable isThreadEnd2;
-
 std::mutex mutex1;
 
 void resetCommandMap(unordered_map<string,Var*> &varSim,

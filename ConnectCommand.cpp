@@ -19,7 +19,7 @@ int ConnectCommand::clientConnect(int client_socket) {
 
   }
   close(client_socket);
-  cout << "client thread is close" << endl;
+  cout << "client thread is closed" << endl;
   unique_lock<std::mutex> lock(mutex2);
   isThreadEnd2.notify_all();
 }

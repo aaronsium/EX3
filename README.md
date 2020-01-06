@@ -1,6 +1,6 @@
 # EX3
 
-# ![pageres](media/promo.jpg)
+![pageres](media/promo.jpg)
 
 EX3 is an ‫‪interpreter‬‬ for unmanned aerial vehicle. 
 The vehicle is a plane that fly's in the virtual space of the flight simulator ‫‪FlightGear. 
@@ -100,3 +100,8 @@ if - `ifCommand`, while - `loopCommand`.
 In order to deal with expressions use classes from "EX1.cpp":
 `BinaryOperator` `UnaryOperator` `UPlus` `UMinus` `Plus` `Minus` 
 `Mul` `Div` `Var` `Value`
+
+
+##Github
+[pageres-cli](https://github.com/aaronsium/EX3)
+# ![pageres](media/ending.png)

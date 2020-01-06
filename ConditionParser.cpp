@@ -35,8 +35,6 @@ Interpreter i2;
   if(A<750){
     int x=1;
   }
-//
-cout<<A<<endl;
 
 
   if(arguments[2] == "=="){

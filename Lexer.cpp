@@ -37,7 +37,8 @@ void Lexer::fixLine(string &line) {
   string s1 = "while";
   string s2 = "if";
   string s3 = "var";
-  if (line.find('=') != std::string::npos && !(isprefix(line, s1) || isprefix(line, s2) || isprefix(line, s3))){
+  if (line.find('=') != std::string::npos && !(isprefix(line, s1) || isprefix(line, s2) ||
+  isprefix(line, s3))&&(!(line.find('"') != std::string::npos))){
     char *token = strtok(newLine, "=");
     bool firstLoop= true;
     while (token!=NULL) {

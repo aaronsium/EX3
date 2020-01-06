@@ -21,8 +21,6 @@ int DefineVarCommand::execute(vector<string> &arguments) {
     string simFix ;
     simFix = sim.substr(1);
     var1.SetSim(simFix);
-    cout << arguments[1]+" "+var1.GetBoundWay()+ " " + var1.GetSim() << endl;
-
   }
         //if it's assignment operation
   else if (arguments[2]=="=") {
@@ -62,15 +60,3 @@ void DefineVarCommand::insertToMap(unordered_map<string, Var> &sourceMap, map<st
 DefineVarCommand::~DefineVarCommand() {
 
 }
-
-
-
-
-//    //if it's assignment operation
-//  else if (arguments[2]=="=") {
-//
-//    Interpreter *i1 = new Interpreter();
-//    insertToMap((*varProgram),i1->GetVariablesMap());
-//    var1.SetValue(i1->interpret(arguments[3])->calculate());
-//  }
-//if there isn't bind

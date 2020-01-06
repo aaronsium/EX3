@@ -12,8 +12,9 @@ void Parser:: parsing(){
   isParsing = true;
   unsigned int i = 0;
   Command* c = NULL;
-  //activate all commands in the lexer
+  //go through lexer
   while(i < v.size()){
+      //if we got out of condition scope
     while(v[i] == "}"){
       if(loop) {
         i=i-stepsLoop;
@@ -23,12 +24,14 @@ void Parser:: parsing(){
       }
     }
     if(v[i] == "var"){
+        //check if we already inserted variable in maps, if not insert it
       if(commandMap.find(v[i+1]) == commandMap.end()){
         commandMap[v[i+1]] = new SetVarCommand(*varSim, *varProgram);
       }
     }
     c = commandMap[v[i]];
     if(c != NULL){
+        //activate command
       vector<string> vec = cut(i);
       i += c->execute(vec);
     }

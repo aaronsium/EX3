@@ -12,7 +12,6 @@ int ConnectCommand::clientConnect(int client_socket) {
   while (isParsing) {
     if (!setQueue.empty()) {
       string message = "set " + setQueue.front().GetSim() + " " + to_string(setQueue.front().GetValue()) + "\r\n";
-//      cout << "update" + message << endl;
       setQueue.pop();
       ssize_t return_val;
       return_val = write(client_socket, message.c_str(), message.length());
@@ -20,7 +19,7 @@ int ConnectCommand::clientConnect(int client_socket) {
 
   }
   close(client_socket);
-  cout << "thread end" << endl;
+  cout << "closing client thread" << endl;
   unique_lock<std::mutex> lock(mutex1);
   isThreadEnd2.notify_all();
 }
@@ -34,8 +33,7 @@ int ConnectCommand::execute(vector<string> &arguments) {
   string adress2 = arguments[1];
   adress2.erase(std::remove(adress2.begin(), adress2.end(), '"'), adress2.end());
 
-//  const char *address = adress2.c_str();
-//  // opening a thread by
+// opening a thread by
   thread threadClient(&ConnectCommand::clientConnect, this, ConnectCommand:: newSocket(adress2, port));
   threadClient.detach();
   return 3;
@@ -52,7 +50,6 @@ int ConnectCommand:: newSocket(string adress2, int port){
     address.sin_family = AF_INET;
     //convert
     const char *address3 = adress2.c_str();
-    //
 
     address.sin_addr.s_addr = inet_addr(address3);
     address.sin_port = htons(port);

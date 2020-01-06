@@ -16,7 +16,7 @@ $sudo apt-get install flightgear
 ## Usage
 
 ```
-include "EX3.cpp"
+include all files in "EX3.cpp" and ran main with the required fly.txt file.
 ```
 
 ## API

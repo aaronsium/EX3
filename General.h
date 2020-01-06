@@ -35,6 +35,7 @@ extern condition_variable isThreadEnd;
 extern condition_variable isThreadEnd2;
 
 
+extern condition_variable isThreadEnd2;
 
 
 

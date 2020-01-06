@@ -11,21 +11,14 @@ ifCommand::ifCommand(unordered_map<string, Var*> &var_sim,
 
 int ifCommand:: execute(vector<string> &v){
     int scopeSize = commandsCounter(v);
-
+    // if condition is true continue as usual
     if(checkCondition(v)){
         return 5;
     }
+    // else  skip over scope
     return scopeSize;
 }
 
-vector<string> ifCommand:: cut(vector<string> &v, int m){
-    auto first = v.cbegin();
-    auto last = v.cbegin() + m;
-
-    vector<string> vec(first, last);
-
-    return vec;
-}
 ifCommand::~ifCommand() {
 
 }

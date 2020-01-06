@@ -1,7 +1,6 @@
 #include "General.h"
 using namespace std;
 
-#define PORT 8081
 bool isParsing = false;
 bool isServerOpen= false;
 bool serverReady = false;
@@ -31,20 +30,16 @@ int main() {
   // creating maps of variables and defineVarCommand
   unordered_map<string,Var*> varSim;
   unordered_map<string,Var> varProgram;
-//  defineVarCommand VarCommand (varSim, varProgram); --- defined in commandMap
-
-  // remember to insert VarCommand which created above, to the parser --- what that means?‬
+  // creating maps of command pointers and insert it
   unordered_map<string, Command*> commandMap;
   resetCommandMap(varSim, varProgram, commandMap);
-  Parser par(commandMap, lex.GetV1(), varSim, varProgram); // --- something wrong with the receiving of lex.GetV1() ---- אהרון : הגטר שלי מחזיר קונסט - הוספתי לך לקונסטרטור של הפארסר קונסט פשוט לפני הארגומנט של הוקטור
+  Parser par(commandMap, lex.GetV1(), varSim, varProgram);
+  //going through all command in lexer array
   par.parsing();
   isParsing = false;
   unique_lock<std::mutex> lock(mutex1);
   isThreadEnd.wait(lock);
   isThreadEnd2.wait(lock);
-
-
-
   return 0;
 }
 

@@ -7,14 +7,14 @@
 Var::Var() {
 
 }
-void Var::SetValue(double value) {
-  Var::value = value;
+void Var::SetValue(double value1) {
+  Var::value = value1;
 }
-void Var::SetBoundWay(const string &bound_way) {
-  BoundWay = bound_way;
+void Var::SetBoundWay(const string &bound_way1) {
+  BoundWay = bound_way1;
 }
-void Var::SetSim(const string &sim) {
-  Var::sim = sim;
+void Var::SetSim(const string &sim1) {
+  Var::sim = sim1;
 }
 double Var::GetValue() const {
   return value;
@@ -28,7 +28,7 @@ const string &Var::GetSim() const {
 const string &Var::GetName() const {
   return name;
 }
-void Var::SetName(const string &name) {
-  Var::name = name;
+void Var::SetName(const string &name1) {
+  Var::name = name1;
 }
 

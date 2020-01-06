@@ -7,8 +7,8 @@
 #include <algorithm>
 #include <cstring>
 #include <sstream>
-Lexer::Lexer(string fileName) {
-  this->fileName = fileName;
+Lexer::Lexer(string fileName1) {
+  this->fileName = fileName1;
 }
 void Lexer::lexing() {
   fstream newFile;
@@ -16,9 +16,6 @@ void Lexer::lexing() {
   if (newFile.is_open()) {   //checking whether the file is open
     string line;
     while (getline(newFile, line)) { //read data from file object and put it into string.
-      if(line == "Print(rpm)"){
-        int x=1;
-      }
       fixLine(line);
     }
     newFile.close(); //close the file object.
@@ -140,3 +137,4 @@ bool Lexer::isprefix(string &str, string &prefix) {
   }
 
 }
+

@@ -3,8 +3,8 @@
 //
 #include "General.h"
 
-Print::Print(unordered_map<string, Var> &varProgram)  {
-  this->varProgram = &varProgram;
+Print::Print(unordered_map<string, Var> &varProgram1)  {
+  this->varProgram = &varProgram1;
 }
 
 int Print:: execute(vector<string> &v){
@@ -72,5 +72,8 @@ void Print::insertToMap(unordered_map<string, Var> &sourceMap, map<string,string
     //insertion
     destMap[x.first]=value;
   }
+
+}
+Print::~Print() {
 
 }

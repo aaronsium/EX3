@@ -67,5 +67,8 @@ int ConnectCommand:: newSocket(string adress2, int port){
 
     return client_socket;
 }
+ConnectCommand::~ConnectCommand() {
+
+}
 
 

@@ -3,9 +3,9 @@
 //
 #include "General.h"
 
-DefineVarCommand::DefineVarCommand(unordered_map<string, Var*> &varSim,unordered_map<string, Var> &varProgram) {
-  this->varSim=&varSim;
-  this->varProgram = &varProgram;
+DefineVarCommand::DefineVarCommand(unordered_map<string, Var*> &varSim1,unordered_map<string, Var> &varProgram1) {
+  this->varSim=&varSim1;
+  this->varProgram = &varProgram1;
 
 }
 int DefineVarCommand::execute(vector<string> &arguments) {
@@ -57,6 +57,9 @@ void DefineVarCommand::insertToMap(unordered_map<string, Var> &sourceMap, map<st
     //insertion
     destMap[x.first]=value;
   }
+
+}
+DefineVarCommand::~DefineVarCommand() {
 
 }
 

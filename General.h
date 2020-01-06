@@ -82,6 +82,7 @@ class DefineVarCommand : public Command {
   DefineVarCommand(unordered_map<string, Var*> &varSim, unordered_map<string, Var> &varProgram);
   void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
   int execute(vector<string> &arguments) override ;
+  ~DefineVarCommand()override ;
 };
 
 class SetVarCommand : public Command {
@@ -96,6 +97,7 @@ class SetVarCommand : public Command {
   int execute(vector<string> &arguments) override;
   ssize_t sendMessage(string path);
   void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
+  ~SetVarCommand()override ;
 };
 
 class ConnectCommand : public Command {
@@ -105,6 +107,7 @@ class ConnectCommand : public Command {
   int clientConnect(int client_socket);
   int execute(vector<string> &arguments) override;
   int newSocket(string adress2, int port);
+  ~ConnectCommand()override ;
 };
 
 class ConditionParser : public Command {
@@ -142,6 +145,7 @@ class ifCommand: public ConditionParser {
             unordered_map<string, Var> &var_program);
   int execute(vector<string> &v) override;
   vector<string> cut(vector<string> &v, int m);
+  ~ifCommand() override;
 };
 
 class OpenServer: public Command{
@@ -150,16 +154,15 @@ class OpenServer: public Command{
   unordered_map<string,Var> *varProgram;
   string ip = "";
   int port;
-  int socke;
   string table[36];
  public:
 //  OpenServer(unordered_map<string, Var> &varProgram_)  :    varProgram(varProgram_) {};
   OpenServer(unordered_map<string,Var*> &varSim) ;
-
   int execute(vector<string> &v) override;
   void Server(int client_socket);
   void tableUpdate();
   int newSocket();
+  virtual ~OpenServer()override ;
 };
 
 class Print: public Command {
@@ -170,13 +173,14 @@ class Print: public Command {
   Print(unordered_map<string, Var> &varProgram) ;
   int execute(vector<string> &v) override;
   void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
-
+  virtual ~Print()override ;
 };
 
 class Sleep: public Command{
  public:
   int execute(vector<string> &v) override;
   void sleep(int milli);
+  virtual ~Sleep()override ;
 };
 
 class Parser {

@@ -16,7 +16,7 @@ int ifCommand:: execute(vector<string> &v){
         return 5;
     }
     return scopeSize;
-};
+}
 
 vector<string> ifCommand:: cut(vector<string> &v, int m){
     auto first = v.cbegin();
@@ -25,4 +25,7 @@ vector<string> ifCommand:: cut(vector<string> &v, int m){
     vector<string> vec(first, last);
 
     return vec;
+}
+ifCommand::~ifCommand() {
+
 }

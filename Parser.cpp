@@ -1,16 +1,16 @@
 #include "General.h"
 
-Parser:: Parser(unordered_map<string, Command *> &map, const vector<string> &vec,
-                unordered_map<string, Var*> &sim,unordered_map<string, Var> &program){
-  this -> commandMap = map;
-  this -> v = vec;
-  this->varSim = &sim;
-  this->varProgram = &program;
+Parser:: Parser(unordered_map<string, Command *> &map1, const vector<string> &vec1,
+                unordered_map<string, Var*> &sim1,unordered_map<string, Var> &program1){
+  this -> commandMap = map1;
+  this -> v = vec1;
+  this->varSim = &sim1;
+  this->varProgram = &program1;
 }
 
 void Parser:: parsing(){
   isParsing = true;
-  int i = 0;
+  unsigned int i = 0;
   Command* c = NULL;
   //activate all commands in the lexer
   while(i < v.size()){

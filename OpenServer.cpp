@@ -5,8 +5,8 @@
 
 #include "General.h"
 
-OpenServer::OpenServer(unordered_map<string, Var *> &varSim) {
-  this->pathMap = &varSim;
+OpenServer::OpenServer(unordered_map<string, Var *> &varSim1) {
+  this->pathMap = &varSim1;
 }
 
 int OpenServer::execute(vector<string> &v) {
@@ -121,4 +121,7 @@ void OpenServer::tableUpdate() {
   table[33] = "controls/switches/master-bat";
   table[34] = "controls/switches/master-alt";
   table[35] = "engines/engine/rpm";
+}
+OpenServer::~OpenServer() {
+
 }

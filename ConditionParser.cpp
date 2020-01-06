@@ -2,9 +2,9 @@
 
 #include "General.h"
 
-ConditionParser::ConditionParser(unordered_map<string, Var*> &varSim,unordered_map<string, Var> &varProgram) {
-  this->varSim = &varSim;
-  this->varProgram = &varProgram;
+ConditionParser::ConditionParser(unordered_map<string, Var*> &varSim1,unordered_map<string, Var> &varProgram1) {
+  this->varSim = &varSim1;
+  this->varProgram = &varProgram1;
 
 }
 int ConditionParser::execute(vector<string> &arguments) {
@@ -31,12 +31,6 @@ Interpreter i2;
   Expression *y = i2.interpret(arguments[3]);
   double A = x->calculate();
   double B = y->calculate();
-  //checkpoint
-  if(A<750){
-    int x=1;
-  }
-
-
   if(arguments[2] == "=="){
 if(A==B){
   return true;

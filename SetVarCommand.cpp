@@ -3,18 +3,12 @@
 //
 
 #include "General.h"
-SetVarCommand::SetVarCommand(unordered_map<string, Var*> &varSim,unordered_map<string, Var> &varProgram){
-  this->varSim = &varSim;
-  this->varProgram = &varProgram;
+SetVarCommand::SetVarCommand(unordered_map<string, Var*> &varSim1,unordered_map<string, Var> &varProgram1){
+  this->varSim = &varSim1;
+  this->varProgram = &varProgram1;
 }
 
 int SetVarCommand::execute(vector<string> &arguments) {
-
-//checkpoint
-  if(arguments[0]=="elevator"){
-    int x =1;
-  }
-  //
   Interpreter i2;
   Var *var1 = &((*varProgram)[arguments[0]]);
   insertToMap((*varProgram),i2.GetVariablesMap());
@@ -42,9 +36,12 @@ void SetVarCommand::insertToMap(unordered_map<string, Var> &sourceMap, map<strin
     //convert the value from double to string.
     ostringstream strs;
     strs << x.second.GetValue();
-    string value = strs.str();
+    string value1 = strs.str();
     //insertion
-    destMap[x.first]=value;
+    destMap[x.first]=value1;
   }
+
+}
+SetVarCommand::~SetVarCommand() {
 
 }

@@ -24,3 +24,6 @@ void Sleep:: sleep(int milli) {
         //blank loop for waiting
     }
 }
+Sleep::~Sleep() {
+
+}

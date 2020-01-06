@@ -14,9 +14,12 @@
 #include <fstream>
 #include <algorithm>
 #include <cstring>
-#include <Command.h>
+#include "Command.h"
 #include <chrono>
 #include <thread>
+#include <mutex>
+#include <cstddef>
+
 
 using namespace std;
 using namespace std::literals::chrono_literals;
@@ -27,6 +30,10 @@ extern bool serverReady;
 extern bool loop;
 extern int stepsLoop;
 extern vector<string> loopLex;
+extern std::mutex mutex1;
+extern condition_variable isThreadEnd;
+
+
 
 class Lexer {
  private:
@@ -74,7 +81,7 @@ class DefineVarCommand : public Command {
  public:
   DefineVarCommand(unordered_map<string, Var*> &varSim, unordered_map<string, Var> &varProgram);
   void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
-  int execute(vector<string> &arguments);
+  int execute(vector<string> &arguments) override ;
 };
 
 class SetVarCommand : public Command {
@@ -86,7 +93,7 @@ class SetVarCommand : public Command {
   double value;
  public:
   SetVarCommand(unordered_map<string, Var*> &varSim,unordered_map<string, Var> &varProgram);
-  int execute(vector<string> &arguments);
+  int execute(vector<string> &arguments) override;
   ssize_t sendMessage(string path);
   void insertToMap(unordered_map<string, Var> &sourceMap, map<string,string> &destMap);
 };
@@ -96,7 +103,7 @@ class ConnectCommand : public Command {
  public:
   ConnectCommand();
   int clientConnect(int client_socket);
-  int execute(vector<string> &arguments);
+  int execute(vector<string> &arguments) override;
   int newSocket(string adress2, int port);
 };
 
@@ -118,7 +125,7 @@ class loopCommands : public ConditionParser {
  public:
   loopCommands(unordered_map<string, Var*> &var_sim,
                unordered_map<string, Var> &var_program);
-  int execute(vector<string> &arguments);
+  int execute(vector<string> &arguments) override;
 };
 
 class Expression {
@@ -176,8 +183,12 @@ class Parser {
  private:
   unordered_map<string, Command*> commandMap;
   vector<string> v;
+  unordered_map<string, Var*> *varSim;
+  unordered_map<string, Var> *varProgram;
+
  public:
-  Parser(unordered_map<string, Command *> &map, const vector<string> &vec);
+  Parser(unordered_map<string, Command *> &map, const vector<string> &vec,
+         unordered_map<string, Var*> &sim,unordered_map<string, Var> &program);
   void parsing();
   vector<string> cut(int m);
 };

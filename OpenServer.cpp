@@ -5,22 +5,22 @@
 
 #include "General.h"
 
-OpenServer::OpenServer(unordered_map<string,Var*> &varSim){
-  this -> pathMap = &varSim;
+OpenServer::OpenServer(unordered_map<string, Var *> &varSim) {
+  this->pathMap = &varSim;
 }
 
-int OpenServer:: execute(vector<string> &v){
+int OpenServer::execute(vector<string> &v) {
   port = stoi(v[1]);
   tableUpdate();
-  thread serverThread(&OpenServer::Server, this, OpenServer:: newSocket());
+  thread serverThread(&OpenServer::Server, this, OpenServer::newSocket());
   serverThread.detach();
 
   return 2;
 }
 
-int OpenServer:: newSocket(){
+int OpenServer::newSocket() {
   int socke = socket(AF_INET, SOCK_STREAM, 0);
-  if(socke == -1){
+  if (socke==-1) {
     cerr << "Could not create a socket" << endl;
     return -1;
   }
@@ -30,19 +30,19 @@ int OpenServer:: newSocket(){
   address.sin_addr.s_addr = INADDR_ANY;
   address.sin_port = htons(port);
 
-  if(bind(socke, (struct sockaddr*) &address, sizeof(address)) == -1){
+  if (bind(socke, (struct sockaddr *) &address, sizeof(address))==-1) {
     cerr << "Could not bind the socket to an IP" << endl;
     return -2;
   }
 
-  if(listen(socke, 5) == -1){
+  if (listen(socke, 5)==-1) {
     cerr << "Error during listening command" << endl;
     return -3;
   }
 
-  cout<<"waiting"<<endl;
-  int client_socket = accept(socke, (struct sockaddr*) &address, (socklen_t*)&address);
-  if(client_socket == -1){
+  cout << "waiting" << endl;
+  int client_socket = accept(socke, (struct sockaddr *) &address, (socklen_t *) &address);
+  if (client_socket==-1) {
     cerr << "Error accepting client" << endl;
     return -4;
   }
@@ -50,42 +50,41 @@ int OpenServer:: newSocket(){
   return client_socket;
 }
 
-void OpenServer:: Server(int client_socket){
+void OpenServer::Server(int client_socket) {
   cout << "Server is now listening" << endl;
   isServerOpen = true;
   char buffer[1024] = {0};
-  while (read(client_socket, buffer, 1024 ) && isParsing){
+  while (read(client_socket, buffer, 1024) && isParsing) {
     serverReady = true;
     char delimiter = ',';
     int m = 0;
     int j = 0;
-    for(int i = 0; i < 36 ; i++){
-      while ((buffer[j] != delimiter) && (buffer[j] != '\0')){
+    for (int i = 0; i < 36; i++) {
+      while ((buffer[j]!=delimiter) && (buffer[j]!='\0')) {
         j++;
       }
       string token = "";
-      while (m < j){
+      while (m < j) {
         token += buffer[m];
         m++;
       }
       m++;
 
-      if(!(pathMap->find(table[i]) == pathMap->end())) {
-        if ((*pathMap)[table[i]]->GetBoundWay() == "<-") {
+      if (!(pathMap->find(table[i])==pathMap->end())) {
+        if ((*pathMap)[table[i]]->GetBoundWay()=="<-") {
           (*pathMap)[table[i]]->SetValue(strtof((string(token)).c_str(), 0));
         }
       }
-//        cout << "[" << i << "]"<<pathMap[table[i]].GetValue()<<" ";
-//      cout << "[" << i << "]"<<token<<" ";
       j++;
     }
-//    cout<<endl;
   }
   close(client_socket);
+  cout << "thread end" << endl;
+  unique_lock<std::mutex> lock(mutex1);
+  isThreadEnd.notify_all();
 }
 
-
-void OpenServer::tableUpdate(){
+void OpenServer::tableUpdate() {
   table[0] = "instrumentation/airspeed-indicator/indicated-speed-kt";
   table[1] = "sim/time/warp";
   table[2] = "controls/switches/magnetos";

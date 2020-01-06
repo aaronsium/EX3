@@ -9,42 +9,18 @@ queue<Var> setQueue ;
 bool loop = false;
 int stepsLoop = 0;
 vector<string> loopLex;
-
+condition_variable isThreadEnd;
+std::mutex mutex1;
 
 void resetCommandMap(unordered_map<string,Var*> &varSim,
-    unordered_map<string,Var> &varProgram, unordered_map<string, Command*> &commandMap){
-    commandMap["openDataServer"] = new OpenServer(varSim);
-    commandMap["connectControlClient"] = new ConnectCommand;
-    commandMap["var"] = new DefineVarCommand(varSim, varProgram);
-    commandMap["Print"] = new Print(varProgram);
-    commandMap["Sleep"] = new Sleep;
-    commandMap["if"] = new ifCommand(varSim, varProgram);
-    commandMap["while"] = new loopCommands(varSim, varProgram);
-
-    commandMap["mixture"] = new SetVarCommand(varSim, varProgram);
-    commandMap["warp"] = new SetVarCommand(varSim, varProgram);
-    commandMap["magnetos"] = new SetVarCommand(varSim, varProgram);
-    commandMap["masterbat"] = new SetVarCommand(varSim, varProgram);
-    commandMap["masterlat"] = new SetVarCommand(varSim, varProgram);
-    commandMap["masterbat"] = new SetVarCommand(varSim, varProgram);
-    commandMap["masteravionics"] = new SetVarCommand(varSim, varProgram);
-    commandMap["brakeparking"] = new SetVarCommand(varSim, varProgram);
-    commandMap["primer"] = new SetVarCommand(varSim, varProgram);
-    commandMap["starter"] = new SetVarCommand(varSim, varProgram);
-    commandMap["autostart"] = new SetVarCommand(varSim, varProgram);
-    commandMap["breaks"] = new SetVarCommand(varSim, varProgram);
-    commandMap["throttle"] = new SetVarCommand(varSim, varProgram);
-    commandMap["heading"] = new SetVarCommand(varSim, varProgram);
-    commandMap["airspeed"] = new SetVarCommand(varSim, varProgram);
-    commandMap["roll"] = new SetVarCommand(varSim, varProgram);
-    commandMap["pitch"] = new SetVarCommand(varSim, varProgram);
-    commandMap["rudder"] = new SetVarCommand(varSim, varProgram);
-    commandMap["aileron"] = new SetVarCommand(varSim, varProgram);
-    commandMap["elevator"] = new SetVarCommand(varSim, varProgram);
-    commandMap["alt"] = new SetVarCommand(varSim, varProgram);
-    commandMap["rpm"] = new SetVarCommand(varSim, varProgram);
-    commandMap["blc"] = new SetVarCommand(varSim, varProgram);
-
+                     unordered_map<string,Var> &varProgram, unordered_map<string, Command*> &commandMap){
+  commandMap["openDataServer"] = new OpenServer(varSim);
+  commandMap["connectControlClient"] = new ConnectCommand;
+  commandMap["var"] = new DefineVarCommand(varSim, varProgram);
+  commandMap["Print"] = new Print(varProgram);
+  commandMap["Sleep"] = new Sleep;
+  commandMap["if"] = new ifCommand(varSim, varProgram);
+  commandMap["while"] = new loopCommands(varSim, varProgram);
 }
 
 int main() {
@@ -59,23 +35,14 @@ int main() {
   // remember to insert VarCommand which created above, to the parser --- what that means?‬
   unordered_map<string, Command*> commandMap;
   resetCommandMap(varSim, varProgram, commandMap);
-  Parser par(commandMap, lex.GetV1()); // --- something wrong with the receiving of lex.GetV1() ---- אהרון : הגטר שלי מחזיר קונסט - הוספתי לך לקונסטרטור של הפארסר קונסט פשוט לפני הארגומנט של הוקטור
+  Parser par(commandMap, lex.GetV1(), varSim, varProgram); // --- something wrong with the receiving of lex.GetV1() ---- אהרון : הגטר שלי מחזיר קונסט - הוספתי לך לקונסטרטור של הפארסר קונסט פשוט לפני הארגומנט של הוקטור
   par.parsing();
   isParsing = false;
-
-
-
-////  ConnectCommand connect;
-//  vector<string> v2;
-//  v2.push_back("connectControlClient");
-//  v2.push_back("127.0.0.1");
-//  v2.push_back("5402");
-////  connect.execute(v2);
-
+  unique_lock<std::mutex> lock(mutex1);
+  isThreadEnd.wait(lock);
 
 
   return 0;
 }
-
 
 

@@ -86,7 +86,7 @@ void OpenServer::Server(int client_socket) {
     }
   }
   close(client_socket);
-  cout << "closing server thread" << endl;
+  cout << "server thread is closed" << endl;
   unique_lock<std::mutex> lock(mutex1);
   isThreadEnd.notify_all();
 }

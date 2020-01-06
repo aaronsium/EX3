@@ -101,7 +101,6 @@ In order to deal with expressions use classes from "EX1.cpp":
 `BinaryOperator` `UnaryOperator` `UPlus` `UMinus` `Plus` `Minus` 
 `Mul` `Div` `Var` `Value`
 
-
 ##Github
 
 [pageres-cli](https://github.com/aaronsium/EX3)

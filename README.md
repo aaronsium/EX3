@@ -99,7 +99,7 @@ if - `ifCommand`, while - `loopCommand`.
 
 In order to deal with expressions use classes from "EX1.cpp":
 `BinaryOperator` `UnaryOperator` `UPlus` `UMinus` `Plus` `Minus` 
-`Mul` `Div` `Var` `Value`
+`Mul` `Div` `Var` `Value`.
 
 ##Github
 

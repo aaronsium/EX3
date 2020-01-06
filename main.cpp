@@ -11,6 +11,7 @@ vector<string> loopLex;
 condition_variable isThreadEnd;
 condition_variable isThreadEnd2;
 std::mutex mutex1;
+std::mutex mutex2;
 
 void resetCommandMap(unordered_map<string,Var*> &varSim,
                      unordered_map<string,Var> &varProgram, unordered_map<string, Command*> &commandMap){
@@ -37,9 +38,10 @@ int main() {
   //going through all command in lexer array
   par.parsing();
   isParsing = false;
-  unique_lock<std::mutex> lock(mutex1);
-  isThreadEnd.wait(lock);
-  isThreadEnd2.wait(lock);
+  unique_lock<std::mutex> lock1(mutex1);
+  unique_lock<std::mutex> lock2(mutex2);
+  isThreadEnd.wait(lock1);
+  isThreadEnd2.wait(lock2);
   return 0;
 }
 

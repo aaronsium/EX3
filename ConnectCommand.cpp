@@ -20,7 +20,7 @@ int ConnectCommand::clientConnect(int client_socket) {
   }
   close(client_socket);
   cout << "closing client thread" << endl;
-  unique_lock<std::mutex> lock(mutex1);
+  unique_lock<std::mutex> lock(mutex2);
   isThreadEnd2.notify_all();
 }
 

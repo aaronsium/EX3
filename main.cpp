@@ -10,6 +10,8 @@ bool loop = false;
 int stepsLoop = 0;
 vector<string> loopLex;
 condition_variable isThreadEnd;
+condition_variable isThreadEnd2;
+
 std::mutex mutex1;
 
 void resetCommandMap(unordered_map<string,Var*> &varSim,
@@ -40,6 +42,8 @@ int main() {
   isParsing = false;
   unique_lock<std::mutex> lock(mutex1);
   isThreadEnd.wait(lock);
+  isThreadEnd2.wait(lock);
+
 
 
   return 0;

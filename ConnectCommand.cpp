@@ -22,7 +22,7 @@ int ConnectCommand::clientConnect(int client_socket) {
   close(client_socket);
   cout << "thread end" << endl;
   unique_lock<std::mutex> lock(mutex1);
-  isThreadEnd.notify_all();
+  isThreadEnd2.notify_all();
 }
 
 int ConnectCommand::execute(vector<string> &arguments) {

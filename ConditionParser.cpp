@@ -38,7 +38,7 @@ if(A==B){
 
 }else if(arguments[2] == ">"){
 
-  if(A==B){
+  if(A>B){
     return true;
   }
 

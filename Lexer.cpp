@@ -137,4 +137,7 @@ bool Lexer::isprefix(string &str, string &prefix) {
   }
 
 }
+Lexer::~Lexer() {
+
+}
 

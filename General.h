@@ -46,7 +46,7 @@ class Lexer {
   void removeWhite(string line);
   const vector<string> &GetV1() const;
   bool isprefix(string &str, string &prefix);
-
+  virtual ~Lexer();
 };
 
 class Var {

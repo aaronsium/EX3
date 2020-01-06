@@ -1,7 +1,6 @@
 #include "General.h"
 using namespace std;
 
-#define PORT 8081
 bool isParsing = false;
 bool isServerOpen= false;
 bool serverReady = false;
@@ -10,6 +9,7 @@ bool loop = false;
 int stepsLoop = 0;
 vector<string> loopLex;
 condition_variable isThreadEnd;
+condition_variable isThreadEnd2;
 std::mutex mutex1;
 
 void resetCommandMap(unordered_map<string,Var*> &varSim,

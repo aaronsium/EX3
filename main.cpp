@@ -24,9 +24,14 @@ void resetCommandMap(unordered_map<string,Var*> &varSim,
   commandMap["while"] = new loopCommands(varSim, varProgram);
 }
 
-int main() {
+int main(int arg, char *args[]) {
+  if(args[0] == 0){
+    cout<<"error: file name was not provided"<<endl;
+    exit(0);
+  }
+  string fileName(args[1]);
   // reading from the file-> splitting to commands-> inserting them to an vector
-  Lexer lex("fly.txt");
+  Lexer lex(fileName);
   lex.lexing();
   // creating maps of variables and defineVarCommand
   unordered_map<string,Var*> varSim;
